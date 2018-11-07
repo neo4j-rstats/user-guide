@@ -192,6 +192,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="about" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> About</h1>
 <p>This book is a user companion for using Neo4J and R together with the <code>{neo4r}</code> package.</p>
+<p>The goal of {neo4r} is to provide a modern and flexible Neo4J driver for R.</p>
+<p>It’s modern in the sense that the results are returned as tibbles whenever possible, it relies on modern tools, and it is designed to work with pipes. Our goal is to provide a driver that can be easily integrated in a data analysis workflow, especially by providing an API working smoothly with other data analysis (<code>{dplyr}</code> or <code>{purrr}</code>) and graph packages (<code>{igraph}</code>, <code>{ggraph}</code>, <code>{visNetwork}</code>…).</p>
+<p>It’s flexible in the sense that it is rather unopinionated regarding the way it returns the results, by trying to stay as close as possible to the way Neo4J returns data. That way, you have the control over the way you will compute the results. At the same time, the result is not too complex, so that the “heavy lifting” of data wrangling is not left to the user.</p>
+<p>The connexion object is also an easy to control R6 method, allowing you to update and query information from the API.</p>
 
 </div>
             </section>

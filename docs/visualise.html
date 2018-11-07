@@ -188,23 +188,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 7</span> Visualise data</h1>
 <div id="with-ggraph" class="section level2">
 <h2><span class="header-section-number">7.1</span> With <code>{ggraph}</code> :</h2>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw">library</span>(ggraph)</a></code></pre></div>
-<pre><code>## Loading required package: ggplot2</code></pre>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="st">&#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5;&#39;</span> <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb53-2" data-line-number="2"><span class="st">  </span><span class="kw">call_api</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb53-3" data-line-number="3"><span class="st">  </span><span class="kw">convert_to</span>(<span class="st">&quot;igraph&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb53-4" data-line-number="4"><span class="st">  </span><span class="kw">ggraph</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb53-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_node_label</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name, <span class="dt">color =</span> group)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb53-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_edge_link</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb53-7" data-line-number="7"><span class="st">  </span><span class="kw">theme_graph</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw">library</span>(ggraph)</a>
+<a class="sourceLine" id="cb51-2" data-line-number="2"><span class="st">&#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5;&#39;</span> <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb51-3" data-line-number="3"><span class="st">  </span><span class="kw">call_api</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb51-4" data-line-number="4"><span class="st">  </span><span class="kw">convert_to</span>(<span class="st">&quot;igraph&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb51-5" data-line-number="5"><span class="st">  </span><span class="kw">ggraph</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb51-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_node_label</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name, <span class="dt">color =</span> group)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb51-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_edge_link</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb51-8" data-line-number="8"><span class="st">  </span><span class="kw">theme_graph</span>()</a></code></pre></div>
 <pre><code>## Using `nicely` as default layout</code></pre>
 <p><img src="neo4j-r-book_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 <div id="with-visnetwork" class="section level3">
 <h3><span class="header-section-number">7.1.1</span> With <code>{visNetwork}</code></h3>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1">network &lt;-<span class="st"> &#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5;&#39;</span> <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb55-2" data-line-number="2"><span class="st">  </span><span class="kw">call_api</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb55-3" data-line-number="3"><span class="st">  </span><span class="kw">convert_to</span>(<span class="st">&quot;visNetwork&quot;</span>)</a>
-<a class="sourceLine" id="cb55-4" data-line-number="4">visNetwork<span class="op">::</span><span class="kw">visNetwork</span>(network<span class="op">$</span>nodes, network<span class="op">$</span>relationships)</a></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1">network &lt;-<span class="st"> &#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5;&#39;</span> <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb53-2" data-line-number="2"><span class="st">  </span><span class="kw">call_api</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb53-3" data-line-number="3"><span class="st">  </span><span class="kw">convert_to</span>(<span class="st">&quot;visNetwork&quot;</span>)</a>
+<a class="sourceLine" id="cb53-4" data-line-number="4">visNetwork<span class="op">::</span><span class="kw">visNetwork</span>(network<span class="op">$</span>nodes, network<span class="op">$</span>relationships)</a></code></pre></div>
 
 </div>
 </div>

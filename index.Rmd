@@ -14,6 +14,14 @@ description: "A Guide About Using Neo4J and R"
 
 This book is a user companion for using Neo4J and R together with the `{neo4r}` package.
 
+The goal of {neo4r} is to provide a modern and flexible Neo4J driver for R.
+
+It's modern in the sense that the results are returned as tibbles whenever possible, it relies on modern tools, and it is designed to work with pipes. Our goal is to provide a driver that can be easily integrated in a data analysis workflow, especially by providing an API working smoothly with other data analysis (`{dplyr}` or `{purrr}`) and graph packages (`{igraph}`, `{ggraph}`, `{visNetwork}`...).
+
+It's flexible in the sense that it is rather unopinionated regarding the way it returns the results, by trying to stay as close as possible to the way Neo4J returns data. That way, you have the control over the way you will compute the results. At the same time, the result is not too complex, so that the "heavy lifting" of data wrangling is not left to the user. 
+
+The connexion object is also an easy to control R6 method, allowing you to update and query information from the API. 
+
 ```{r include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(

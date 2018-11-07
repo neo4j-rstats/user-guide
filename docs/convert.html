@@ -195,13 +195,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">res <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb48-2" data-line-number="2"><span class="st">  </span><span class="kw">convert_to</span>(<span class="st">&quot;igraph&quot;</span>)</a></code></pre></div>
-<pre><code>## IGRAPH 0db80b1 DN-- 6 5 -- 
+<pre><code>## IGRAPH 397a6b8 DN-- 6 5 -- 
 ## + attr: name (v/c), group (v/c), release (v/n), formed (v/n), type
 ## | (e/c), id (e/c), properties (e/x)
-## + edges from 0db80b1 (vertex names):
-## [1] Filosofem         -&gt;Burzum Hvis lyset tar oss-&gt;Burzum
-## [3] Aske              -&gt;Burzum Det som engang var-&gt;Burzum
-## [5] Burzum            -&gt;Burzum</code></pre>
+## + edges from 397a6b8 (vertex names):
+## [1] Aske              -&gt;Burzum Hvis lyset tar oss-&gt;Burzum
+## [3] Burzum            -&gt;Burzum Det som engang var-&gt;Burzum
+## [5] Demo I            -&gt;Burzum</code></pre>
 <p>Which means that you can :</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="st">&#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5;&#39;</span> <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb50-2" data-line-number="2"><span class="st">  </span><span class="kw">call_api</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
