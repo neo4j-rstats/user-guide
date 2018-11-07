@@ -1,0 +1,53 @@
+# Sending data to the API {#send}
+
+### Reading and sending a cypher file :
+
++ `read_cypher` reads a cypher file and returns a tibble of all the calls
+
+```{r}
+read_cypher("data-raw/create.cypher")
+```
+
++ `send_cypher` reads a cypher file, and send it the the API. By default, the stats are returned. 
+
+```{r eval = FALSE}
+send_cypher("data-raw/constraints.cypher", con)
+```
+
+
+### Sending csv dataframe to Neo4J
+
+The `load_csv` sends an csv from an url to the Neo4J browser. 
+
+The args are : 
+
++ `on_load` : the code to execute on load 
++ `con` : the connexion object 
++ `url` : the url of the csv to send
++ `header` : wether or not the csv has a header
++ `periodic_commit` : the volume for PERIODIC COMMIT
++ `as` : the AS argument for LOAD CSV
++ `format` : the format of the result 
++ `include_stats` : whether or not to include the stats 
++ `meta` : whether or not to return the meta information
+
+```{r eval = FALSE}
+# Create the constraints
+call_api("CREATE CONSTRAINT ON (a:artist) ASSERT a.name IS UNIQUE;", con)
+call_api("CREATE CONSTRAINT ON (al:album) ASSERT al.name IS UNIQUE;", con)
+```
+
+```{r}
+# List constaints (if any)
+con$get_constraints()
+# Create the query that will create the nodes and relationships
+on_load_query <- 'MERGE (a:artist { name: csvLine.artist})
+MERGE (al:album {name: csvLine.album_name})
+MERGE (a) -[:has_recorded] -> (al)  
+RETURN a AS artists, al AS albums;'
+# Send the csv 
+load_csv(url = "https://raw.githubusercontent.com/ThinkR-open/datasets/master/tracks.csv", 
+         con = con, header = TRUE, periodic_commit = 50, 
+         as = "csvLine", on_load = on_load_query)
+```
+

@@ -1,0 +1,11 @@
+# Introduction {#intro}
+
+## Installation 
+
+### Dev version from GitHub
+
+```{r eval = FALSE}
+# install.packages("remotes")
+remotes::install_github("neo4j-rstats/neo4r")
+```
+

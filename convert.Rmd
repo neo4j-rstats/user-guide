@@ -1,0 +1,23 @@
+# Convert output {#convert}
+
+### {igraph}
+
+In order to be converted into a graph object, 
+
++ nodes need an id, and a name. By default, node name is assumed to be found in the "name" property returned by the graph, specifying any other column is allowed. The "label" column from Neo4J is renamed "group".
+
++ relationships need a start and an end, *i.e.* startNode and endNode in the Neo4J results. 
+
+```{r}
+res %>%
+  convert_to("igraph")
+```
+
+Which means that you can : 
+
+```{r}
+'MATCH p=()-[r:WAS_RECORDED]->() RETURN p LIMIT 5;' %>%
+  call_api(con, type = "graph") %>% 
+  convert_to("igraph") %>%
+  plot()
+```

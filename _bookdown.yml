@@ -1,0 +1,16 @@
+book_filename: "neo4j-r-book"
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: "Chapter "
+
+rmd_files: [
+  "index.rmd",
+  "intro.Rmd",
+  "connection.Rmd",
+  "get_data.Rmd",
+  "send_data.Rmd",
+  "convert.Rmd",
+  "visualise.Rmd",
+  "appendix-A.Rmd"
+]

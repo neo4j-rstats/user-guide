@@ -1,0 +1,51 @@
+# Connection {#connect}
+
+## HTTP connection 
+
+You can start a new connection to your server with the `neo4j_api` object. 
+
+You'll need to call `neo4j_api$new`, with the url (with port specified if any), your user name, and your  password. 
+
+```{r}
+library(neo4r)
+con <- neo4j_api$new(
+  url = "http://localhost:7474",
+  user = "neo4j", 
+  password = "neo4j"
+  )
+```
+
+If you don't want your password to be included in the script, you can use the `rstudioapi::askForPassword()` function, which will open a little widget asking to interactively enter your password. 
+
+```{r eval = FALSE}
+con <- neo4j_api$new(
+  url = "http://localhost:7474",
+  user = "neo4j", 
+  password = rstudioapi::askForPassword()
+  )
+```
+
+You can then check if you can access to the server by pinging it:
+
+```{r}
+con$ping()
+```
+
+Which should return 200 if the connexion succeeded. 
+
+## Get informations about the connection :
+
+You'll then be able to get information about the server with: 
+
+```{r}
+# Get Neo4J Version
+con$get_version()
+# List constaints (if any)
+con$get_constraints()
+# Get a vector of labels (if any)
+con$get_labels()
+# Get a vector of relationships (if any)
+con$get_relationships()
+# Get schema 
+con$get_schema()
+```

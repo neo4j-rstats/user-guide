@@ -1,0 +1,90 @@
+# Retrieve data from the API {#retrieve}
+
+The API can be called either from the connection objet, or with the `call_api()` function. 
+
+The `call_api()` function takes several arguments : 
+
++ `query` : the cypher query
++ `con` : the connexion object 
++ `type` : "rows" or "graph": wether to return the results as a list of results in tibble, or as a graph object (with `$nodes` and `$relationships`)
++ `output` : the output format (R or json) 
++ `include_stats` : whether or not to include the stats about the call 
++ `meta` : wether or not to include the meta arguments of the nodes when calling with "rows"
+
+## "rows" format
+
+The user chooses wether or not to return a list of tibbles when calling the API. You get as many objects as specified in the RETURN cypher statement. 
+
+```{r}
+library(magrittr)
+
+'MATCH (r:record) -[:WAS_RECORDED] -> (b:Band) where b.formed = 1991 RETURN *;' %>%
+  call_api(con)
+```
+
+By default, results are returned as an R list of tibbles. We think this is the more "truthful" way to implement the outputs regarding Neo4J calls. 
+
+For example, when you want to return two nodes types, you'll get two results, in the form of two tibbles (what we've seen just before) - the result is a two elements list with each element being labelled the way it has been specified in the Cypher query. 
+
+Results can also be returned in JSON:
+
+```{r}
+'MATCH (r:record) -[:WAS_RECORDED] -> (b:Band) where b.formed = 1991 RETURN *;' %>%
+  call_api(con, output = "json")
+```
+
+If you turn the `type` argument to `"graph"`, you'll get a graph result: 
+
+```{r}
+'MATCH p=()-[r:WAS_RECORDED]->() RETURN p LIMIT 5' %>%
+  call_api(con, type = "graph")
+```
+
+The result is returned as one node or relationship by row. 
+
+Due to the specific data format of Neo4J, there can be more than one label and property by node and relationship. That's why the results are returned, by design, as a list-dataframe. 
+
+## Parsing results 
+
+We have designed several functions to unnest the output : 
+
++ #### unnest_nodes, that can unnest a node dataframe : 
+
+```{r}
+res <- 'MATCH p=()-[r:WAS_RECORDED]->() RETURN p LIMIT 5;' %>%
+  call_api(con, type = "graph")
+unnest_nodes(res$nodes)
+```
+
+Note that this function will return `NA` for the properties that aren't in a node. For example here, we have no 'formed' information for the record nodes .
+
+On the long run, and this is not {neo4r} specific but Neo4J related, a good practice is to have a "name" propertie on each node, so this column will be full here.
+
+Also, it is possible to unnest either the properties or the labels : 
+
+```{r}
+res$nodes %>%
+  unnest_nodes(what = "properties")
+```
+
+```{r}
+res$nodes %>%
+  unnest_nodes(what = "label")
+```
+
++ `unnest_relationships`
+
+There is only one nested column in the relationship table, thus the function is quite straightforward : 
+
+```{r}
+unnest_relationships(res$relationships)
+```
+
++ `unnest_graph`
+
+This function takes a graph results, and does `unnest_nodes` and `unnest_relationships`. 
+
+```{r}
+unnest_graph(res)
+```
+
