@@ -2,7 +2,7 @@
 
 ### {igraph}
 
-In order to be converted into a graph object, 
+In order to be converted into a graph object:
 
 + nodes need an id, and a name. By default, node name is assumed to be found in the "name" property returned by the graph, specifying any other column is allowed. The "label" column from Neo4J is renamed "group".
 

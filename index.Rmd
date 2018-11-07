@@ -12,11 +12,21 @@ description: "A Guide About Using Neo4J and R"
 
 # About 
 
-
+This book is a user companion for using Neo4J and R together with the `{neo4r}` package.
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
   .packages(), 'bookdown', 'knitr', 'rmarkdown'
 ), 'packages.bib')
+
+library(neo4r)
+con <- neo4j_api$new(
+  url = "http://localhost:7474",
+  user = "neo4j", 
+  password = "pouetpouet"
+  )
+call_api("MATCH (n) DETACH DELETE n", con)
+send_cypher("data-raw/create.cypher", con)
 ```
+

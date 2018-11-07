@@ -48,7 +48,7 @@ Due to the specific data format of Neo4J, there can be more than one label and p
 
 We have designed several functions to unnest the output : 
 
-+ #### unnest_nodes, that can unnest a node dataframe : 
++ `unnest_nodes()`, that can unnest a node dataframe : 
 
 ```{r}
 res <- 'MATCH p=()-[r:WAS_RECORDED]->() RETURN p LIMIT 5;' %>%
@@ -72,7 +72,7 @@ res$nodes %>%
   unnest_nodes(what = "label")
 ```
 
-+ `unnest_relationships`
++ `unnest_relationships()`
 
 There is only one nested column in the relationship table, thus the function is quite straightforward : 
 
@@ -80,11 +80,21 @@ There is only one nested column in the relationship table, thus the function is 
 unnest_relationships(res$relationships)
 ```
 
-+ `unnest_graph`
++ `unnest_graph()`
 
 This function takes a graph results, and does `unnest_nodes` and `unnest_relationships`. 
 
 ```{r}
 unnest_graph(res)
+```
+
+### Extraction 
+
+There are two convenient functions to extract nodes and relationships: 
+
+```{r}
+'MATCH p=()-[r:WAS_RECORDED]->() RETURN p LIMIT 5;' %>%
+  call_api(con, type = "graph") %>% 
+  extract_nodes()
 ```
 

@@ -15,7 +15,7 @@ send_cypher("data-raw/constraints.cypher", con)
 ```
 
 
-### Sending csv dataframe to Neo4J
+### Sending csv to Neo4J
 
 The `load_csv` sends an csv from an url to the Neo4J browser. 
 
@@ -49,5 +49,25 @@ RETURN a AS artists, al AS albums;'
 load_csv(url = "https://raw.githubusercontent.com/ThinkR-open/datasets/master/tracks.csv", 
          con = con, header = TRUE, periodic_commit = 50, 
          as = "csvLine", on_load = on_load_query)
+```
+
+### Transform elements to cypher queries
+
++ `vec_to_cypher()` creates a list : 
+
+```{r}
+vec_to_cypher(iris[1, 1:3], "Species")
+```
+
++ and `vec_to_cypher_with_var()` creates a cypher call starting with a variable : 
+
+```{r}
+vec_to_cypher_with_var(iris[1, 1:3], "Species", a)
+```
+
+This can be combined inside a cypher call: 
+
+```{r}
+paste("MERGE", vec_to_cypher(iris[1, 1:3], "Species"))
 ```
 

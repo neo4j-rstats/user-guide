@@ -11,7 +11,7 @@ library(neo4r)
 con <- neo4j_api$new(
   url = "http://localhost:7474",
   user = "neo4j", 
-  password = "neo4j"
+  password = "pouetpouet"
   )
 ```
 
@@ -49,3 +49,4 @@ con$get_relationships()
 # Get schema 
 con$get_schema()
 ```
+
