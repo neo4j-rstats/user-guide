@@ -15,7 +15,7 @@ library(ggraph)
 
 ### With `{visNetwork}`
 
-```{r}
+```{r eval = FALSE}
 network <- 'MATCH p=()-[r:WAS_RECORDED]->() RETURN p LIMIT 5;' %>%
   call_api(con, type = "graph") %>% 
   convert_to("visNetwork")
