@@ -145,11 +145,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4" data-path="retrieve.html"><a href="retrieve.html"><i class="fa fa-check"></i><b>4</b> Retrieve data from the API</a><ul>
 <li class="chapter" data-level="4.1" data-path="retrieve.html"><a href="retrieve.html#rows-format"><i class="fa fa-check"></i><b>4.1</b> “rows” format</a></li>
-<li class="chapter" data-level="4.2" data-path="retrieve.html"><a href="retrieve.html#parsing-results"><i class="fa fa-check"></i><b>4.2</b> Parsing results</a></li>
+<li class="chapter" data-level="4.2" data-path="retrieve.html"><a href="retrieve.html#parsing-results"><i class="fa fa-check"></i><b>4.2</b> Parsing results</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="retrieve.html"><a href="retrieve.html#extraction"><i class="fa fa-check"></i><b>4.2.1</b> Extraction</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="send.html"><a href="send.html"><i class="fa fa-check"></i><b>5</b> Sending data to the API</a><ul>
 <li class="chapter" data-level="5.0.1" data-path="send.html"><a href="send.html#reading-and-sending-a-cypher-file"><i class="fa fa-check"></i><b>5.0.1</b> Reading and sending a cypher file :</a></li>
-<li class="chapter" data-level="5.0.2" data-path="send.html"><a href="send.html#sending-csv-dataframe-to-neo4j"><i class="fa fa-check"></i><b>5.0.2</b> Sending csv dataframe to Neo4J</a></li>
+<li class="chapter" data-level="5.0.2" data-path="send.html"><a href="send.html#sending-csv-to-neo4j"><i class="fa fa-check"></i><b>5.0.2</b> Sending csv to Neo4J</a></li>
+<li class="chapter" data-level="5.0.3" data-path="send.html"><a href="send.html#transform-elements-to-cypher-queries"><i class="fa fa-check"></i><b>5.0.3</b> Transform elements to cypher queries</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="convert.html"><a href="convert.html"><i class="fa fa-check"></i><b>6</b> Convert output</a><ul>
 <li class="chapter" data-level="6.0.1" data-path="convert.html"><a href="convert.html#igraph"><i class="fa fa-check"></i><b>6.0.1</b> {igraph}</a></li>
@@ -189,24 +192,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 7</span> Visualise data</h1>
 <div id="with-ggraph" class="section level2">
 <h2><span class="header-section-number">7.1</span> With <code>{ggraph}</code> :</h2>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw">library</span>(ggraph)</a>
-<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="st">&#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5;&#39;</span> <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb43-3" data-line-number="3"><span class="st">  </span><span class="kw">call_api</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="st">  </span><span class="kw">convert_to</span>(<span class="st">&quot;igraph&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb43-5" data-line-number="5"><span class="st">  </span><span class="kw">ggraph</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb43-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_node_label</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name, <span class="dt">color =</span> group)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb43-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_edge_link</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb43-8" data-line-number="8"><span class="st">  </span><span class="kw">theme_graph</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw">library</span>(ggraph)</a></code></pre></div>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="st">&#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5;&#39;</span> <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb53-2" data-line-number="2"><span class="st">  </span><span class="kw">call_api</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb53-3" data-line-number="3"><span class="st">  </span><span class="kw">convert_to</span>(<span class="st">&quot;igraph&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb53-4" data-line-number="4"><span class="st">  </span><span class="kw">ggraph</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb53-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_node_label</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name, <span class="dt">color =</span> group)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb53-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_edge_link</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb53-7" data-line-number="7"><span class="st">  </span><span class="kw">theme_graph</span>()</a></code></pre></div>
 <pre><code>## Using `nicely` as default layout</code></pre>
-<p><img src="neo4j-r-book_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="neo4j-r-book_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 <div id="with-visnetwork" class="section level3">
 <h3><span class="header-section-number">7.1.1</span> With <code>{visNetwork}</code></h3>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">network &lt;-<span class="st"> &#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5;&#39;</span> <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb45-2" data-line-number="2"><span class="st">  </span><span class="kw">call_api</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb45-3" data-line-number="3"><span class="st">  </span><span class="kw">convert_to</span>(<span class="st">&quot;visNetwork&quot;</span>)</a>
-<a class="sourceLine" id="cb45-4" data-line-number="4">visNetwork<span class="op">::</span><span class="kw">visNetwork</span>(network<span class="op">$</span>nodes, network<span class="op">$</span>relationships)</a></code></pre></div>
-<div id="htmlwidget-313a20aa78ca043fb3c3" style="width:672px;height:480px;" class="visNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-313a20aa78ca043fb3c3">{"x":{"nodes":{"id":["3","36","41","28","34","25"],"group":["Band","record","record","record","record","record"],"label":["Burzum","Hvis lyset tar oss","Filosofem","Det som engang var","Aske","Demo I"],"formed":[1991,null,null,null,null,null],"release":[null,1992,1993,1992,1992,1991]},"edges":{"id":["26","27","24","25","22"],"type":["WAS_RECORDED","WAS_RECORDED","WAS_RECORDED","WAS_RECORDED","WAS_RECORDED"],"from":["36","41","28","34","25"],"to":["3","3","3","3","3"],"properties":[null,null,null,null,null]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false}},"groups":["Band","record"],"width":null,"height":null,"idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1">network &lt;-<span class="st"> &#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5;&#39;</span> <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb55-2" data-line-number="2"><span class="st">  </span><span class="kw">call_api</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb55-3" data-line-number="3"><span class="st">  </span><span class="kw">convert_to</span>(<span class="st">&quot;visNetwork&quot;</span>)</a>
+<a class="sourceLine" id="cb55-4" data-line-number="4">visNetwork<span class="op">::</span><span class="kw">visNetwork</span>(network<span class="op">$</span>nodes, network<span class="op">$</span>relationships)</a></code></pre></div>
+<div id="htmlwidget-6cf6acc006f2b42ff128" style="width:672px;height:480px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6cf6acc006f2b42ff128">{"x":{"nodes":{"id":["4243","2190","4241","4248","4229","4232"],"group":["record","Band","record","record","record","record"],"release":[1992,null,1992,1993,1991,1991],"label":["Hvis lyset tar oss","Burzum","Aske","Filosofem","Demo I","Demo II"],"formed":[null,1991,null,null,null,null]},"edges":{"id":["4209","4208","4210","4204","4205"],"type":["WAS_RECORDED","WAS_RECORDED","WAS_RECORDED","WAS_RECORDED","WAS_RECORDED"],"from":["4243","4241","4248","4229","4232"],"to":["2190","2190","2190","2190","2190"],"properties":[null,null,null,null,null]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false}},"groups":["record","Band"],"width":null,"height":null,"idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)"},"evals":[],"jsHooks":[]}</script>
 
 </div>
 </div>

@@ -145,11 +145,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4" data-path="retrieve.html"><a href="retrieve.html"><i class="fa fa-check"></i><b>4</b> Retrieve data from the API</a><ul>
 <li class="chapter" data-level="4.1" data-path="retrieve.html"><a href="retrieve.html#rows-format"><i class="fa fa-check"></i><b>4.1</b> “rows” format</a></li>
-<li class="chapter" data-level="4.2" data-path="retrieve.html"><a href="retrieve.html#parsing-results"><i class="fa fa-check"></i><b>4.2</b> Parsing results</a></li>
+<li class="chapter" data-level="4.2" data-path="retrieve.html"><a href="retrieve.html#parsing-results"><i class="fa fa-check"></i><b>4.2</b> Parsing results</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="retrieve.html"><a href="retrieve.html#extraction"><i class="fa fa-check"></i><b>4.2.1</b> Extraction</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="send.html"><a href="send.html"><i class="fa fa-check"></i><b>5</b> Sending data to the API</a><ul>
 <li class="chapter" data-level="5.0.1" data-path="send.html"><a href="send.html#reading-and-sending-a-cypher-file"><i class="fa fa-check"></i><b>5.0.1</b> Reading and sending a cypher file :</a></li>
-<li class="chapter" data-level="5.0.2" data-path="send.html"><a href="send.html#sending-csv-dataframe-to-neo4j"><i class="fa fa-check"></i><b>5.0.2</b> Sending csv dataframe to Neo4J</a></li>
+<li class="chapter" data-level="5.0.2" data-path="send.html"><a href="send.html#sending-csv-to-neo4j"><i class="fa fa-check"></i><b>5.0.2</b> Sending csv to Neo4J</a></li>
+<li class="chapter" data-level="5.0.3" data-path="send.html"><a href="send.html#transform-elements-to-cypher-queries"><i class="fa fa-check"></i><b>5.0.3</b> Transform elements to cypher queries</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="convert.html"><a href="convert.html"><i class="fa fa-check"></i><b>6</b> Convert output</a><ul>
 <li class="chapter" data-level="6.0.1" data-path="convert.html"><a href="convert.html#igraph"><i class="fa fa-check"></i><b>6.0.1</b> {igraph}</a></li>
@@ -189,26 +192,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 6</span> Convert output</h1>
 <div id="igraph" class="section level3">
 <h3><span class="header-section-number">6.0.1</span> {igraph}</h3>
-<p>In order to be converted into a graph object,</p>
+<p>In order to be converted into a graph object:</p>
 <ul>
 <li><p>nodes need an id, and a name. By default, node name is assumed to be found in the “name” property returned by the graph, specifying any other column is allowed. The “label” column from Neo4J is renamed “group”.</p></li>
 <li><p>relationships need a start and an end, <em>i.e.</em> startNode and endNode in the Neo4J results.</p></li>
 </ul>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">res <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="st">  </span><span class="kw">convert_to</span>(<span class="st">&quot;igraph&quot;</span>)</a></code></pre></div>
-<pre><code>## IGRAPH eb154db DN-- 6 5 -- 
-## + attr: name (v/c), group (v/c), formed (v/n), release (v/n), type
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">res <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb48-2" data-line-number="2"><span class="st">  </span><span class="kw">convert_to</span>(<span class="st">&quot;igraph&quot;</span>)</a></code></pre></div>
+<pre><code>## IGRAPH 6ae0834 DN-- 6 5 -- 
+## + attr: name (v/c), group (v/c), release (v/n), formed (v/n), type
 ## | (e/c), id (e/c), properties (e/x)
-## + edges from eb154db (vertex names):
-## [1] Hvis lyset tar oss-&gt;Burzum Filosofem         -&gt;Burzum
-## [3] Det som engang var-&gt;Burzum Aske              -&gt;Burzum
-## [5] Demo I            -&gt;Burzum</code></pre>
+## + edges from 6ae0834 (vertex names):
+## [1] Hvis lyset tar oss-&gt;Burzum Aske              -&gt;Burzum
+## [3] Filosofem         -&gt;Burzum Demo I            -&gt;Burzum
+## [5] Demo II           -&gt;Burzum</code></pre>
 <p>Which means that you can :</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="st">&#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5;&#39;</span> <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="st">  </span><span class="kw">call_api</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb42-3" data-line-number="3"><span class="st">  </span><span class="kw">convert_to</span>(<span class="st">&quot;igraph&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb42-4" data-line-number="4"><span class="st">  </span><span class="kw">plot</span>()</a></code></pre></div>
-<p><img src="neo4j-r-book_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="st">&#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5;&#39;</span> <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb50-2" data-line-number="2"><span class="st">  </span><span class="kw">call_api</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb50-3" data-line-number="3"><span class="st">  </span><span class="kw">convert_to</span>(<span class="st">&quot;igraph&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb50-4" data-line-number="4"><span class="st">  </span><span class="kw">plot</span>()</a></code></pre></div>
+<p><img src="neo4j-r-book_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 
 </div>
 </div>

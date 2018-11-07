@@ -145,11 +145,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4" data-path="retrieve.html"><a href="retrieve.html"><i class="fa fa-check"></i><b>4</b> Retrieve data from the API</a><ul>
 <li class="chapter" data-level="4.1" data-path="retrieve.html"><a href="retrieve.html#rows-format"><i class="fa fa-check"></i><b>4.1</b> “rows” format</a></li>
-<li class="chapter" data-level="4.2" data-path="retrieve.html"><a href="retrieve.html#parsing-results"><i class="fa fa-check"></i><b>4.2</b> Parsing results</a></li>
+<li class="chapter" data-level="4.2" data-path="retrieve.html"><a href="retrieve.html#parsing-results"><i class="fa fa-check"></i><b>4.2</b> Parsing results</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="retrieve.html"><a href="retrieve.html#extraction"><i class="fa fa-check"></i><b>4.2.1</b> Extraction</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="send.html"><a href="send.html"><i class="fa fa-check"></i><b>5</b> Sending data to the API</a><ul>
 <li class="chapter" data-level="5.0.1" data-path="send.html"><a href="send.html#reading-and-sending-a-cypher-file"><i class="fa fa-check"></i><b>5.0.1</b> Reading and sending a cypher file :</a></li>
-<li class="chapter" data-level="5.0.2" data-path="send.html"><a href="send.html#sending-csv-dataframe-to-neo4j"><i class="fa fa-check"></i><b>5.0.2</b> Sending csv dataframe to Neo4J</a></li>
+<li class="chapter" data-level="5.0.2" data-path="send.html"><a href="send.html#sending-csv-to-neo4j"><i class="fa fa-check"></i><b>5.0.2</b> Sending csv to Neo4J</a></li>
+<li class="chapter" data-level="5.0.3" data-path="send.html"><a href="send.html#transform-elements-to-cypher-queries"><i class="fa fa-check"></i><b>5.0.3</b> Transform elements to cypher queries</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="convert.html"><a href="convert.html"><i class="fa fa-check"></i><b>6</b> Convert output</a><ul>
 <li class="chapter" data-level="6.0.1" data-path="convert.html"><a href="convert.html#igraph"><i class="fa fa-check"></i><b>6.0.1</b> {igraph}</a></li>
@@ -195,7 +198,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb2-2" data-line-number="2">con &lt;-<span class="st"> </span>neo4j_api<span class="op">$</span><span class="kw">new</span>(</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="dt">url =</span> <span class="st">&quot;http://localhost:7474&quot;</span>,</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="dt">user =</span> <span class="st">&quot;neo4j&quot;</span>, </a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="dt">password =</span> <span class="st">&quot;neo4j&quot;</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="dt">password =</span> <span class="st">&quot;pouetpouet&quot;</span></a>
 <a class="sourceLine" id="cb2-6" data-line-number="6">  )</a></code></pre></div>
 <p>If you don’t want your password to be included in the script, you can use the <code>rstudioapi::askForPassword()</code> function, which will open a little widget asking to interactively enter your password.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">con &lt;-<span class="st"> </span>neo4j_api<span class="op">$</span><span class="kw">new</span>(</a>
@@ -217,42 +220,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># List constaints (if any)</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">con<span class="op">$</span><span class="kw">get_constraints</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 3
-##   label      type       property_keys
-##   &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;        
-## 1 Maintainer UNIQUENESS name         
-## 2 Author     UNIQUENESS name         
-## 3 Package    UNIQUENESS name</code></pre>
+##   label  type       property_keys
+##   &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;        
+## 1 Band   UNIQUENESS name         
+## 2 City   UNIQUENESS name         
+## 3 record UNIQUENESS name</code></pre>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># Get a vector of labels (if any)</span></a>
 <a class="sourceLine" id="cb10-2" data-line-number="2">con<span class="op">$</span><span class="kw">get_labels</span>()</a></code></pre></div>
-<pre><code>## # A tibble: 9 x 1
-##   labels    
-##   &lt;chr&gt;     
-## 1 City      
-## 2 artist    
-## 3 Package   
-## 4 Maintainer
-## 5 Person    
-## 6 record    
-## 7 Author    
-## 8 Band      
-## 9 album</code></pre>
+<pre><code>## # A tibble: 4 x 1
+##   labels
+##   &lt;chr&gt; 
+## 1 Band  
+## 2 City  
+## 3 record
+## 4 artist</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># Get a vector of relationships (if any)</span></a>
 <a class="sourceLine" id="cb12-2" data-line-number="2">con<span class="op">$</span><span class="kw">get_relationships</span>()</a></code></pre></div>
-<pre><code>## # A tibble: 4 x 1
+<pre><code>## # A tibble: 3 x 1
 ##   labels      
 ##   &lt;chr&gt;       
 ## 1 PLAYED_IN   
 ## 2 IS_FROM     
-## 3 WAS_RECORDED
-## 4 has_recorded</code></pre>
+## 3 WAS_RECORDED</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># Get schema </span></a>
 <a class="sourceLine" id="cb14-2" data-line-number="2">con<span class="op">$</span><span class="kw">get_schema</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
-##   label      property_keys
-##   &lt;chr&gt;      &lt;chr&gt;        
-## 1 Author     name         
-## 2 Package    name         
-## 3 Maintainer name</code></pre>
+##   label  property_keys
+##   &lt;chr&gt;  &lt;chr&gt;        
+## 1 City   name         
+## 2 Band   name         
+## 3 record name</code></pre>
 
 </div>
 </div>

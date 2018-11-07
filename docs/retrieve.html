@@ -145,11 +145,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4" data-path="retrieve.html"><a href="retrieve.html"><i class="fa fa-check"></i><b>4</b> Retrieve data from the API</a><ul>
 <li class="chapter" data-level="4.1" data-path="retrieve.html"><a href="retrieve.html#rows-format"><i class="fa fa-check"></i><b>4.1</b> “rows” format</a></li>
-<li class="chapter" data-level="4.2" data-path="retrieve.html"><a href="retrieve.html#parsing-results"><i class="fa fa-check"></i><b>4.2</b> Parsing results</a></li>
+<li class="chapter" data-level="4.2" data-path="retrieve.html"><a href="retrieve.html#parsing-results"><i class="fa fa-check"></i><b>4.2</b> Parsing results</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="retrieve.html"><a href="retrieve.html#extraction"><i class="fa fa-check"></i><b>4.2.1</b> Extraction</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="send.html"><a href="send.html"><i class="fa fa-check"></i><b>5</b> Sending data to the API</a><ul>
 <li class="chapter" data-level="5.0.1" data-path="send.html"><a href="send.html#reading-and-sending-a-cypher-file"><i class="fa fa-check"></i><b>5.0.1</b> Reading and sending a cypher file :</a></li>
-<li class="chapter" data-level="5.0.2" data-path="send.html"><a href="send.html#sending-csv-dataframe-to-neo4j"><i class="fa fa-check"></i><b>5.0.2</b> Sending csv dataframe to Neo4J</a></li>
+<li class="chapter" data-level="5.0.2" data-path="send.html"><a href="send.html#sending-csv-to-neo4j"><i class="fa fa-check"></i><b>5.0.2</b> Sending csv to Neo4J</a></li>
+<li class="chapter" data-level="5.0.3" data-path="send.html"><a href="send.html#transform-elements-to-cypher-queries"><i class="fa fa-check"></i><b>5.0.3</b> Transform elements to cypher queries</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="convert.html"><a href="convert.html"><i class="fa fa-check"></i><b>6</b> Convert output</a><ul>
 <li class="chapter" data-level="6.0.1" data-path="convert.html"><a href="convert.html#igraph"><i class="fa fa-check"></i><b>6.0.1</b> {igraph}</a></li>
@@ -228,16 +231,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##    release name                         
 ##      &lt;int&gt; &lt;chr&gt;                        
 ##  1    1992 Hvis lyset tar oss           
-##  2    1993 Filosofem                    
-##  3    1992 Det som engang var           
-##  4    1992 Aske                         
-##  5    1991 Demo I                       
+##  2    1992 Aske                         
+##  3    1993 Filosofem                    
+##  4    1991 Demo I                       
+##  5    1991 Demo II                      
 ##  6    1992 Burzum                       
-##  7    1991 Demo I                       
-##  8    1993 Vikingligr Veldi             
+##  7    1992 Det som engang var           
+##  8    1991 Nema                         
 ##  9    1992 Hordanes Land                
 ## 10    1992 Yggdrasill                   
-## 11    1991 Nema                         
+## 11    1993 Vikingligr Veldi             
 ## 12    1993 Pure Holocaust               
 ## 13    1992 Diabolical Fullmoon Mysticism
 ## 14    1991 Immortal</code></pre>
@@ -261,60 +264,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [3],
+##           &quot;id&quot;: [2190],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [36],
-##           &quot;type&quot;: [&quot;node&quot;],
-##           &quot;deleted&quot;: [false]
-##         }
-##       ]
-##     },
-##     {
-##       &quot;row&quot;: [
-##         {
-##           &quot;name&quot;: [&quot;Burzum&quot;],
-##           &quot;formed&quot;: [1991]
-##         },
-##         {
-##           &quot;release&quot;: [1993],
-##           &quot;name&quot;: [&quot;Filosofem&quot;]
-##         }
-##       ],
-##       &quot;meta&quot;: [
-##         {
-##           &quot;id&quot;: [3],
-##           &quot;type&quot;: [&quot;node&quot;],
-##           &quot;deleted&quot;: [false]
-##         },
-##         {
-##           &quot;id&quot;: [41],
-##           &quot;type&quot;: [&quot;node&quot;],
-##           &quot;deleted&quot;: [false]
-##         }
-##       ]
-##     },
-##     {
-##       &quot;row&quot;: [
-##         {
-##           &quot;name&quot;: [&quot;Burzum&quot;],
-##           &quot;formed&quot;: [1991]
-##         },
-##         {
-##           &quot;release&quot;: [1992],
-##           &quot;name&quot;: [&quot;Det som engang var&quot;]
-##         }
-##       ],
-##       &quot;meta&quot;: [
-##         {
-##           &quot;id&quot;: [3],
-##           &quot;type&quot;: [&quot;node&quot;],
-##           &quot;deleted&quot;: [false]
-##         },
-##         {
-##           &quot;id&quot;: [28],
+##           &quot;id&quot;: [4243],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -333,12 +288,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [3],
+##           &quot;id&quot;: [2190],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [34],
+##           &quot;id&quot;: [4241],
+##           &quot;type&quot;: [&quot;node&quot;],
+##           &quot;deleted&quot;: [false]
+##         }
+##       ]
+##     },
+##     {
+##       &quot;row&quot;: [
+##         {
+##           &quot;name&quot;: [&quot;Burzum&quot;],
+##           &quot;formed&quot;: [1991]
+##         },
+##         {
+##           &quot;release&quot;: [1993],
+##           &quot;name&quot;: [&quot;Filosofem&quot;]
+##         }
+##       ],
+##       &quot;meta&quot;: [
+##         {
+##           &quot;id&quot;: [2190],
+##           &quot;type&quot;: [&quot;node&quot;],
+##           &quot;deleted&quot;: [false]
+##         },
+##         {
+##           &quot;id&quot;: [4248],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -357,12 +336,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [3],
+##           &quot;id&quot;: [2190],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [25],
+##           &quot;id&quot;: [4229],
+##           &quot;type&quot;: [&quot;node&quot;],
+##           &quot;deleted&quot;: [false]
+##         }
+##       ]
+##     },
+##     {
+##       &quot;row&quot;: [
+##         {
+##           &quot;name&quot;: [&quot;Burzum&quot;],
+##           &quot;formed&quot;: [1991]
+##         },
+##         {
+##           &quot;release&quot;: [1991],
+##           &quot;name&quot;: [&quot;Demo II&quot;]
+##         }
+##       ],
+##       &quot;meta&quot;: [
+##         {
+##           &quot;id&quot;: [2190],
+##           &quot;type&quot;: [&quot;node&quot;],
+##           &quot;deleted&quot;: [false]
+##         },
+##         {
+##           &quot;id&quot;: [4232],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -381,12 +384,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [3],
+##           &quot;id&quot;: [2190],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [27],
+##           &quot;id&quot;: [4234],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -399,90 +402,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##           &quot;formed&quot;: [1991]
 ##         },
 ##         {
-##           &quot;release&quot;: [1991],
-##           &quot;name&quot;: [&quot;Demo I&quot;]
-##         }
-##       ],
-##       &quot;meta&quot;: [
-##         {
-##           &quot;id&quot;: [3],
-##           &quot;type&quot;: [&quot;node&quot;],
-##           &quot;deleted&quot;: [false]
-##         },
-##         {
-##           &quot;id&quot;: [22],
-##           &quot;type&quot;: [&quot;node&quot;],
-##           &quot;deleted&quot;: [false]
-##         }
-##       ]
-##     },
-##     {
-##       &quot;row&quot;: [
-##         {
-##           &quot;name&quot;: [&quot;Enslaved&quot;],
-##           &quot;formed&quot;: [1991]
-##         },
-##         {
-##           &quot;release&quot;: [1993],
-##           &quot;name&quot;: [&quot;Vikingligr Veldi&quot;]
-##         }
-##       ],
-##       &quot;meta&quot;: [
-##         {
-##           &quot;id&quot;: [7],
-##           &quot;type&quot;: [&quot;node&quot;],
-##           &quot;deleted&quot;: [false]
-##         },
-##         {
-##           &quot;id&quot;: [43],
-##           &quot;type&quot;: [&quot;node&quot;],
-##           &quot;deleted&quot;: [false]
-##         }
-##       ]
-##     },
-##     {
-##       &quot;row&quot;: [
-##         {
-##           &quot;name&quot;: [&quot;Enslaved&quot;],
-##           &quot;formed&quot;: [1991]
-##         },
-##         {
 ##           &quot;release&quot;: [1992],
-##           &quot;name&quot;: [&quot;Hordanes Land&quot;]
+##           &quot;name&quot;: [&quot;Det som engang var&quot;]
 ##         }
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [7],
+##           &quot;id&quot;: [2190],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [38],
-##           &quot;type&quot;: [&quot;node&quot;],
-##           &quot;deleted&quot;: [false]
-##         }
-##       ]
-##     },
-##     {
-##       &quot;row&quot;: [
-##         {
-##           &quot;name&quot;: [&quot;Enslaved&quot;],
-##           &quot;formed&quot;: [1991]
-##         },
-##         {
-##           &quot;release&quot;: [1992],
-##           &quot;name&quot;: [&quot;Yggdrasill&quot;]
-##         }
-##       ],
-##       &quot;meta&quot;: [
-##         {
-##           &quot;id&quot;: [7],
-##           &quot;type&quot;: [&quot;node&quot;],
-##           &quot;deleted&quot;: [false]
-##         },
-##         {
-##           &quot;id&quot;: [32],
+##           &quot;id&quot;: [4235],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -501,12 +432,84 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [7],
+##           &quot;id&quot;: [2194],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [26],
+##           &quot;id&quot;: [4233],
+##           &quot;type&quot;: [&quot;node&quot;],
+##           &quot;deleted&quot;: [false]
+##         }
+##       ]
+##     },
+##     {
+##       &quot;row&quot;: [
+##         {
+##           &quot;name&quot;: [&quot;Enslaved&quot;],
+##           &quot;formed&quot;: [1991]
+##         },
+##         {
+##           &quot;release&quot;: [1992],
+##           &quot;name&quot;: [&quot;Hordanes Land&quot;]
+##         }
+##       ],
+##       &quot;meta&quot;: [
+##         {
+##           &quot;id&quot;: [2194],
+##           &quot;type&quot;: [&quot;node&quot;],
+##           &quot;deleted&quot;: [false]
+##         },
+##         {
+##           &quot;id&quot;: [4245],
+##           &quot;type&quot;: [&quot;node&quot;],
+##           &quot;deleted&quot;: [false]
+##         }
+##       ]
+##     },
+##     {
+##       &quot;row&quot;: [
+##         {
+##           &quot;name&quot;: [&quot;Enslaved&quot;],
+##           &quot;formed&quot;: [1991]
+##         },
+##         {
+##           &quot;release&quot;: [1992],
+##           &quot;name&quot;: [&quot;Yggdrasill&quot;]
+##         }
+##       ],
+##       &quot;meta&quot;: [
+##         {
+##           &quot;id&quot;: [2194],
+##           &quot;type&quot;: [&quot;node&quot;],
+##           &quot;deleted&quot;: [false]
+##         },
+##         {
+##           &quot;id&quot;: [4239],
+##           &quot;type&quot;: [&quot;node&quot;],
+##           &quot;deleted&quot;: [false]
+##         }
+##       ]
+##     },
+##     {
+##       &quot;row&quot;: [
+##         {
+##           &quot;name&quot;: [&quot;Enslaved&quot;],
+##           &quot;formed&quot;: [1991]
+##         },
+##         {
+##           &quot;release&quot;: [1993],
+##           &quot;name&quot;: [&quot;Vikingligr Veldi&quot;]
+##         }
+##       ],
+##       &quot;meta&quot;: [
+##         {
+##           &quot;id&quot;: [2194],
+##           &quot;type&quot;: [&quot;node&quot;],
+##           &quot;deleted&quot;: [false]
+##         },
+##         {
+##           &quot;id&quot;: [4250],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -525,12 +528,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [10],
+##           &quot;id&quot;: [2197],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [49],
+##           &quot;id&quot;: [4256],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -549,12 +552,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [10],
+##           &quot;id&quot;: [2197],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [29],
+##           &quot;id&quot;: [4236],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -573,12 +576,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [10],
+##           &quot;id&quot;: [2197],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [24],
+##           &quot;id&quot;: [4231],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -593,22 +596,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## # A tibble: 6 x 3
 ##   id    label     properties
 ##   &lt;chr&gt; &lt;list&gt;    &lt;list&gt;    
-## 1 3     &lt;chr [1]&gt; &lt;list [2]&gt;
-## 2 36    &lt;chr [1]&gt; &lt;list [2]&gt;
-## 3 41    &lt;chr [1]&gt; &lt;list [2]&gt;
-## 4 28    &lt;chr [1]&gt; &lt;list [2]&gt;
-## 5 34    &lt;chr [1]&gt; &lt;list [2]&gt;
-## 6 25    &lt;chr [1]&gt; &lt;list [2]&gt;
+## 1 4243  &lt;chr [1]&gt; &lt;list [2]&gt;
+## 2 2190  &lt;chr [1]&gt; &lt;list [2]&gt;
+## 3 4241  &lt;chr [1]&gt; &lt;list [2]&gt;
+## 4 4248  &lt;chr [1]&gt; &lt;list [2]&gt;
+## 5 4229  &lt;chr [1]&gt; &lt;list [2]&gt;
+## 6 4232  &lt;chr [1]&gt; &lt;list [2]&gt;
 ## 
 ## $relationships
 ## # A tibble: 5 x 5
 ##   id    type         startNode endNode properties
 ##   &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;   &lt;list&gt;    
-## 1 26    WAS_RECORDED 36        3       &lt;list [0]&gt;
-## 2 27    WAS_RECORDED 41        3       &lt;list [0]&gt;
-## 3 24    WAS_RECORDED 28        3       &lt;list [0]&gt;
-## 4 25    WAS_RECORDED 34        3       &lt;list [0]&gt;
-## 5 22    WAS_RECORDED 25        3       &lt;list [0]&gt;
+## 1 4209  WAS_RECORDED 4243      2190    &lt;list [0]&gt;
+## 2 4208  WAS_RECORDED 4241      2190    &lt;list [0]&gt;
+## 3 4210  WAS_RECORDED 4248      2190    &lt;list [0]&gt;
+## 4 4204  WAS_RECORDED 4229      2190    &lt;list [0]&gt;
+## 5 4205  WAS_RECORDED 4232      2190    &lt;list [0]&gt;
 ## 
 ## attr(,&quot;class&quot;)
 ## [1] &quot;neo&quot;  &quot;list&quot;</code></pre>
@@ -619,87 +622,103 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">4.2</span> Parsing results</h2>
 <p>We have designed several functions to unnest the output :</p>
 <ul>
-<li><h4 id="unnest_nodes-that-can-unnest-a-node-dataframe"><span class="header-section-number">4.2</span> unnest_nodes, that can unnest a node dataframe :</h4></li>
+<li><code>unnest_nodes()</code>, that can unnest a node dataframe :</li>
 </ul>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">res &lt;-<span class="st"> &#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5;&#39;</span> <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb22-2" data-line-number="2"><span class="st">  </span><span class="kw">call_api</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>)</a>
 <a class="sourceLine" id="cb22-3" data-line-number="3"><span class="kw">unnest_nodes</span>(res<span class="op">$</span>nodes)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 5
-##   id    label  name               formed release
-##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;               &lt;int&gt;   &lt;int&gt;
-## 1 3     Band   Burzum               1991      NA
-## 2 36    record Hvis lyset tar oss     NA    1992
-## 3 41    record Filosofem              NA    1993
-## 4 28    record Det som engang var     NA    1992
-## 5 34    record Aske                   NA    1992
-## 6 25    record Demo I                 NA    1991</code></pre>
+##   id    label  release name               formed
+##   &lt;chr&gt; &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;               &lt;int&gt;
+## 1 4243  record    1992 Hvis lyset tar oss     NA
+## 2 2190  Band        NA Burzum               1991
+## 3 4241  record    1992 Aske                   NA
+## 4 4248  record    1993 Filosofem              NA
+## 5 4229  record    1991 Demo I                 NA
+## 6 4232  record    1991 Demo II                NA</code></pre>
 <p>Note that this function will return <code>NA</code> for the properties that aren’t in a node. For example here, we have no ‘formed’ information for the record nodes .</p>
 <p>On the long run, and this is not {neo4r} specific but Neo4J related, a good practice is to have a “name” propertie on each node, so this column will be full here.</p>
 <p>Also, it is possible to unnest either the properties or the labels :</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">res<span class="op">$</span>nodes <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb24-2" data-line-number="2"><span class="st">  </span><span class="kw">unnest_nodes</span>(<span class="dt">what =</span> <span class="st">&quot;properties&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 5
-##   id    label     name               formed release
-##   &lt;chr&gt; &lt;list&gt;    &lt;chr&gt;               &lt;int&gt;   &lt;int&gt;
-## 1 3     &lt;chr [1]&gt; Burzum               1991      NA
-## 2 36    &lt;chr [1]&gt; Hvis lyset tar oss     NA    1992
-## 3 41    &lt;chr [1]&gt; Filosofem              NA    1993
-## 4 28    &lt;chr [1]&gt; Det som engang var     NA    1992
-## 5 34    &lt;chr [1]&gt; Aske                   NA    1992
-## 6 25    &lt;chr [1]&gt; Demo I                 NA    1991</code></pre>
+##   id    label     release name               formed
+##   &lt;chr&gt; &lt;list&gt;      &lt;int&gt; &lt;chr&gt;               &lt;int&gt;
+## 1 4243  &lt;chr [1]&gt;    1992 Hvis lyset tar oss     NA
+## 2 2190  &lt;chr [1]&gt;      NA Burzum               1991
+## 3 4241  &lt;chr [1]&gt;    1992 Aske                   NA
+## 4 4248  &lt;chr [1]&gt;    1993 Filosofem              NA
+## 5 4229  &lt;chr [1]&gt;    1991 Demo I                 NA
+## 6 4232  &lt;chr [1]&gt;    1991 Demo II                NA</code></pre>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">res<span class="op">$</span>nodes <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb26-2" data-line-number="2"><span class="st">  </span><span class="kw">unnest_nodes</span>(<span class="dt">what =</span> <span class="st">&quot;label&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##   id    properties label 
 ##   &lt;chr&gt; &lt;list&gt;     &lt;chr&gt; 
-## 1 3     &lt;list [2]&gt; Band  
-## 2 36    &lt;list [2]&gt; record
-## 3 41    &lt;list [2]&gt; record
-## 4 28    &lt;list [2]&gt; record
-## 5 34    &lt;list [2]&gt; record
-## 6 25    &lt;list [2]&gt; record</code></pre>
+## 1 4243  &lt;list [2]&gt; record
+## 2 2190  &lt;list [2]&gt; Band  
+## 3 4241  &lt;list [2]&gt; record
+## 4 4248  &lt;list [2]&gt; record
+## 5 4229  &lt;list [2]&gt; record
+## 6 4232  &lt;list [2]&gt; record</code></pre>
 <ul>
-<li><code>unnest_relationships</code></li>
+<li><code>unnest_relationships()</code></li>
 </ul>
 <p>There is only one nested column in the relationship table, thus the function is quite straightforward :</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">unnest_relationships</span>(res<span class="op">$</span>relationships)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 5
 ##   id    type         startNode endNode properties
 ##   &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;     
-## 1 26    WAS_RECORDED 36        3       &lt;NA&gt;      
-## 2 27    WAS_RECORDED 41        3       &lt;NA&gt;      
-## 3 24    WAS_RECORDED 28        3       &lt;NA&gt;      
-## 4 25    WAS_RECORDED 34        3       &lt;NA&gt;      
-## 5 22    WAS_RECORDED 25        3       &lt;NA&gt;</code></pre>
+## 1 4209  WAS_RECORDED 4243      2190    &lt;NA&gt;      
+## 2 4208  WAS_RECORDED 4241      2190    &lt;NA&gt;      
+## 3 4210  WAS_RECORDED 4248      2190    &lt;NA&gt;      
+## 4 4204  WAS_RECORDED 4229      2190    &lt;NA&gt;      
+## 5 4205  WAS_RECORDED 4232      2190    &lt;NA&gt;</code></pre>
 <ul>
-<li><code>unnest_graph</code></li>
+<li><code>unnest_graph()</code></li>
 </ul>
 <p>This function takes a graph results, and does <code>unnest_nodes</code> and <code>unnest_relationships</code>.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">unnest_graph</span>(res)</a></code></pre></div>
 <pre><code>## $nodes
 ## # A tibble: 6 x 5
-##   id    label  name               formed release
-##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;               &lt;int&gt;   &lt;int&gt;
-## 1 3     Band   Burzum               1991      NA
-## 2 36    record Hvis lyset tar oss     NA    1992
-## 3 41    record Filosofem              NA    1993
-## 4 28    record Det som engang var     NA    1992
-## 5 34    record Aske                   NA    1992
-## 6 25    record Demo I                 NA    1991
+##   id    label  release name               formed
+##   &lt;chr&gt; &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;               &lt;int&gt;
+## 1 4243  record    1992 Hvis lyset tar oss     NA
+## 2 2190  Band        NA Burzum               1991
+## 3 4241  record    1992 Aske                   NA
+## 4 4248  record    1993 Filosofem              NA
+## 5 4229  record    1991 Demo I                 NA
+## 6 4232  record    1991 Demo II                NA
 ## 
 ## $relationships
 ## # A tibble: 5 x 5
 ##   id    type         startNode endNode properties
 ##   &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;     
-## 1 26    WAS_RECORDED 36        3       &lt;NA&gt;      
-## 2 27    WAS_RECORDED 41        3       &lt;NA&gt;      
-## 3 24    WAS_RECORDED 28        3       &lt;NA&gt;      
-## 4 25    WAS_RECORDED 34        3       &lt;NA&gt;      
-## 5 22    WAS_RECORDED 25        3       &lt;NA&gt;      
+## 1 4209  WAS_RECORDED 4243      2190    &lt;NA&gt;      
+## 2 4208  WAS_RECORDED 4241      2190    &lt;NA&gt;      
+## 3 4210  WAS_RECORDED 4248      2190    &lt;NA&gt;      
+## 4 4204  WAS_RECORDED 4229      2190    &lt;NA&gt;      
+## 5 4205  WAS_RECORDED 4232      2190    &lt;NA&gt;      
 ## 
 ## attr(,&quot;class&quot;)
 ## [1] &quot;neo&quot;  &quot;list&quot;</code></pre>
+<div id="extraction" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Extraction</h3>
+<p>There are two convenient functions to extract nodes and relationships:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="st">&#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5;&#39;</span> <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="st">  </span><span class="kw">call_api</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="st">  </span><span class="kw">extract_nodes</span>()</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 3
+##   id    label     properties
+##   &lt;chr&gt; &lt;list&gt;    &lt;list&gt;    
+## 1 4243  &lt;chr [1]&gt; &lt;list [2]&gt;
+## 2 2190  &lt;chr [1]&gt; &lt;list [2]&gt;
+## 3 4241  &lt;chr [1]&gt; &lt;list [2]&gt;
+## 4 4248  &lt;chr [1]&gt; &lt;list [2]&gt;
+## 5 4229  &lt;chr [1]&gt; &lt;list [2]&gt;
+## 6 4232  &lt;chr [1]&gt; &lt;list [2]&gt;</code></pre>
 
+</div>
 </div>
 </div>
             </section>
