@@ -25,7 +25,7 @@
 <meta name="author" content="Colin Fay">
 
 
-<meta name="date" content="2018-11-07">
+<meta name="date" content="2019-01-25">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -67,7 +67,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -129,7 +129,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Using R & Neo4J</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#neo4r"><i class="fa fa-check"></i><b>1.1</b> <code>{neo4r}</code></a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
 <li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#installation"><i class="fa fa-check"></i><b>2.1</b> Installation</a><ul>
 <li class="chapter" data-level="2.1.1" data-path="intro.html"><a href="intro.html#dev-version-from-github"><i class="fa fa-check"></i><b>2.1.1</b> Dev version from GitHub</a></li>
@@ -187,16 +189,112 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Using R &amp; Neo4J</h1>
 <h4 class="author"><em>Colin Fay</em></h4>
-<h4 class="date"><em>2018-11-07</em></h4>
+<h4 class="date"><em>2019-01-25</em></h4>
 </div>
 <div id="about" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> About</h1>
 <p>This book is a user companion for using Neo4J and R together with the <code>{neo4r}</code> package.</p>
-<p>The goal of {neo4r} is to provide a modern and flexible Neo4J driver for R.</p>
+<div id="neo4r" class="section level2">
+<h2><span class="header-section-number">1.1</span> <code>{neo4r}</code></h2>
+<p>The goal of <code>{neo4r}</code> is to provide a modern and flexible Neo4J driver for R.</p>
 <p>It’s modern in the sense that the results are returned as tibbles whenever possible, it relies on modern tools, and it is designed to work with pipes. Our goal is to provide a driver that can be easily integrated in a data analysis workflow, especially by providing an API working smoothly with other data analysis (<code>{dplyr}</code> or <code>{purrr}</code>) and graph packages (<code>{igraph}</code>, <code>{ggraph}</code>, <code>{visNetwork}</code>…).</p>
 <p>It’s flexible in the sense that it is rather unopinionated regarding the way it returns the results, by trying to stay as close as possible to the way Neo4J returns data. That way, you have the control over the way you will compute the results. At the same time, the result is not too complex, so that the “heavy lifting” of data wrangling is not left to the user.</p>
 <p>The connexion object is also an easy to control R6 method, allowing you to update and query information from the API.</p>
+<p>Sending data for this book:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(neo4r)</a>
+<a class="sourceLine" id="cb1-2" title="2">con &lt;-<span class="st"> </span>neo4j_api<span class="op">$</span><span class="kw">new</span>(</a>
+<a class="sourceLine" id="cb1-3" title="3">  <span class="dt">url =</span> <span class="st">&quot;http://localhost:7474&quot;</span>,</a>
+<a class="sourceLine" id="cb1-4" title="4">  <span class="dt">user =</span> <span class="st">&quot;neo4j&quot;</span>, </a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="dt">password =</span> <span class="st">&quot;neo4j&quot;</span></a>
+<a class="sourceLine" id="cb1-6" title="6">  )</a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="kw">call_neo4j</span>(<span class="st">&quot;MATCH (n) DETACH DELETE n&quot;</span>, con)</a></code></pre></div>
+<pre><code>## No data returned.</code></pre>
+<pre><code>## list()
+## attr(,&quot;class&quot;)
+## [1] &quot;neo&quot;  &quot;neo&quot;  &quot;list&quot;</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">read_cypher</span>(<span class="st">&quot;data-raw/create.cypher&quot;</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 4 x 1
+##   cypher                                                                   
+##   &lt;chr&gt;                                                                    
+## 1 CREATE CONSTRAINT ON (b:Band) ASSERT b.name IS UNIQUE;                   
+## 2 CREATE CONSTRAINT ON (c:City) ASSERT c.name IS UNIQUE;                   
+## 3 CREATE CONSTRAINT ON (r:record) ASSERT r.name IS UNIQUE;                 
+## 4 CREATE (ancient:Band {name: &#39;Ancient&#39;, formed: 1992}), (acturus:Band {na…</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">send_cypher</span>(<span class="st">&quot;data-raw/create.cypher&quot;</span>, con)</a></code></pre></div>
+<pre><code>## No data returned.
+## No data returned.
+## No data returned.
+## No data returned.</code></pre>
+<pre><code>## [[1]]
+## # A tibble: 12 x 2
+##    type                  value
+##    &lt;chr&gt;                 &lt;dbl&gt;
+##  1 contains_updates          0
+##  2 nodes_created             0
+##  3 nodes_deleted             0
+##  4 properties_set            0
+##  5 relationships_created     0
+##  6 relationship_deleted      0
+##  7 labels_added              0
+##  8 labels_removed            0
+##  9 indexes_added             0
+## 10 indexes_removed           0
+## 11 constraints_added         0
+## 12 constraints_removed       0
+## 
+## [[2]]
+## # A tibble: 12 x 2
+##    type                  value
+##    &lt;chr&gt;                 &lt;dbl&gt;
+##  1 contains_updates          0
+##  2 nodes_created             0
+##  3 nodes_deleted             0
+##  4 properties_set            0
+##  5 relationships_created     0
+##  6 relationship_deleted      0
+##  7 labels_added              0
+##  8 labels_removed            0
+##  9 indexes_added             0
+## 10 indexes_removed           0
+## 11 constraints_added         0
+## 12 constraints_removed       0
+## 
+## [[3]]
+## # A tibble: 12 x 2
+##    type                  value
+##    &lt;chr&gt;                 &lt;dbl&gt;
+##  1 contains_updates          0
+##  2 nodes_created             0
+##  3 nodes_deleted             0
+##  4 properties_set            0
+##  5 relationships_created     0
+##  6 relationship_deleted      0
+##  7 labels_added              0
+##  8 labels_removed            0
+##  9 indexes_added             0
+## 10 indexes_removed           0
+## 11 constraints_added         0
+## 12 constraints_removed       0
+## 
+## [[4]]
+## # A tibble: 12 x 2
+##    type                  value
+##    &lt;chr&gt;                 &lt;dbl&gt;
+##  1 contains_updates          1
+##  2 nodes_created            55
+##  3 nodes_deleted             0
+##  4 properties_set          104
+##  5 relationships_created    49
+##  6 relationship_deleted      0
+##  7 labels_added             54
+##  8 labels_removed            0
+##  9 indexes_added             0
+## 10 indexes_removed           0
+## 11 constraints_added         0
+## 12 constraints_removed       0</code></pre>
+<p>See the cypher query at <a href="https://github.com/neo4j-rstats/user-guide/blob/master/data-raw/create.cypher" class="uri">https://github.com/neo4j-rstats/user-guide/blob/master/data-raw/create.cypher</a></p>
 
+</div>
 </div>
             </section>
 

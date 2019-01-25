@@ -25,7 +25,7 @@
 <meta name="author" content="Colin Fay">
 
 
-<meta name="date" content="2018-11-07">
+<meta name="date" content="2019-01-25">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -67,7 +67,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -129,7 +129,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Using R & Neo4J</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#neo4r"><i class="fa fa-check"></i><b>1.1</b> <code>{neo4r}</code></a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
 <li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#installation"><i class="fa fa-check"></i><b>2.1</b> Installation</a><ul>
 <li class="chapter" data-level="2.1.1" data-path="intro.html"><a href="intro.html#dev-version-from-github"><i class="fa fa-check"></i><b>2.1.1</b> Dev version from GitHub</a></li>
@@ -191,7 +193,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><code>read_cypher</code> reads a cypher file and returns a tibble of all the calls</li>
 </ul>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">read_cypher</span>(<span class="st">&quot;data-raw/create.cypher&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="kw">read_cypher</span>(<span class="st">&quot;data-raw/create.cypher&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 1
 ##   cypher                                                                   
 ##   &lt;chr&gt;                                                                    
@@ -202,7 +204,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><code>send_cypher</code> reads a cypher file, and send it the the API. By default, the stats are returned.</li>
 </ul>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">send_cypher</span>(<span class="st">&quot;data-raw/constraints.cypher&quot;</span>, con)</a></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="kw">send_cypher</span>(<span class="st">&quot;data-raw/constraints.cypher&quot;</span>, con)</a></code></pre></div>
 </div>
 <div id="sending-csv-to-neo4j" class="section level3">
 <h3><span class="header-section-number">5.0.2</span> Sending csv to Neo4J</h3>
@@ -219,57 +221,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>include_stats</code> : whether or not to include the stats</li>
 <li><code>meta</code> : whether or not to return the meta information</li>
 </ul>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="co"># Create the constraints</span></a>
-<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="kw">call_api</span>(<span class="st">&quot;CREATE CONSTRAINT ON (a:artist) ASSERT a.name IS UNIQUE;&quot;</span>, con)</a>
-<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="kw">call_api</span>(<span class="st">&quot;CREATE CONSTRAINT ON (al:album) ASSERT al.name IS UNIQUE;&quot;</span>, con)</a></code></pre></div>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="co"># List constaints (if any)</span></a>
-<a class="sourceLine" id="cb38-2" data-line-number="2">con<span class="op">$</span><span class="kw">get_constraints</span>()</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 3
-##   label  type       property_keys
-##   &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;        
-## 1 Band   UNIQUENESS name         
-## 2 City   UNIQUENESS name         
-## 3 record UNIQUENESS name</code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="co"># Create the query that will create the nodes and relationships</span></a>
-<a class="sourceLine" id="cb40-2" data-line-number="2">on_load_query &lt;-<span class="st"> &#39;MERGE (a:artist { name: csvLine.artist})</span></a>
-<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="st">MERGE (al:album {name: csvLine.album_name})</span></a>
-<a class="sourceLine" id="cb40-4" data-line-number="4"><span class="st">MERGE (a) -[:has_recorded] -&gt; (al)  </span></a>
-<a class="sourceLine" id="cb40-5" data-line-number="5"><span class="st">RETURN a AS artists, al AS albums;&#39;</span></a>
-<a class="sourceLine" id="cb40-6" data-line-number="6"><span class="co"># Send the csv </span></a>
-<a class="sourceLine" id="cb40-7" data-line-number="7"><span class="kw">load_csv</span>(<span class="dt">url =</span> <span class="st">&quot;https://raw.githubusercontent.com/ThinkR-open/datasets/master/tracks.csv&quot;</span>, </a>
-<a class="sourceLine" id="cb40-8" data-line-number="8">         <span class="dt">con =</span> con, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">periodic_commit =</span> <span class="dv">50</span>, </a>
-<a class="sourceLine" id="cb40-9" data-line-number="9">         <span class="dt">as =</span> <span class="st">&quot;csvLine&quot;</span>, <span class="dt">on_load =</span> on_load_query)</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="co"># Create the constraints</span></a>
+<a class="sourceLine" id="cb45-2" title="2"><span class="kw">call_neo4j</span>(<span class="st">&quot;CREATE CONSTRAINT ON (a:artist) ASSERT a.name IS UNIQUE;&quot;</span>, con)</a>
+<a class="sourceLine" id="cb45-3" title="3"><span class="kw">call_neo4j</span>(<span class="st">&quot;CREATE CONSTRAINT ON (al:album) ASSERT al.name IS UNIQUE;&quot;</span>, con)</a></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="co"># List constaints (if any)</span></a>
+<a class="sourceLine" id="cb46-2" title="2">con<span class="op">$</span><span class="kw">get_constraints</span>()</a></code></pre></div>
+<pre><code>##         label       type property_keys
+## 1:     artist UNIQUENESS          name
+## 2: Maintainer UNIQUENESS          name
+## 3:       Band UNIQUENESS          name
+## 4:       City UNIQUENESS          name
+## 5:     record UNIQUENESS          name
+## 6:    Package UNIQUENESS          name
+## 7:     Author UNIQUENESS          name</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1"><span class="co"># Create the query that will create the nodes and relationships</span></a>
+<a class="sourceLine" id="cb48-2" title="2">on_load_query &lt;-<span class="st"> &#39;MERGE (a:artist { name: csvLine.artist})</span></a>
+<a class="sourceLine" id="cb48-3" title="3"><span class="st">MERGE (al:album {name: csvLine.album_name})</span></a>
+<a class="sourceLine" id="cb48-4" title="4"><span class="st">MERGE (a) -[:has_recorded] -&gt; (al)  </span></a>
+<a class="sourceLine" id="cb48-5" title="5"><span class="st">RETURN a AS artists, al AS albums;&#39;</span></a>
+<a class="sourceLine" id="cb48-6" title="6"><span class="co"># Send the csv </span></a>
+<a class="sourceLine" id="cb48-7" title="7"><span class="kw">load_csv</span>(<span class="dt">url =</span> <span class="st">&quot;https://raw.githubusercontent.com/ThinkR-open/datasets/master/tracks.csv&quot;</span>, </a>
+<a class="sourceLine" id="cb48-8" title="8">         <span class="dt">con =</span> con, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">periodic_commit =</span> <span class="dv">50</span>, </a>
+<a class="sourceLine" id="cb48-9" title="9">         <span class="dt">as =</span> <span class="st">&quot;csvLine&quot;</span>, <span class="dt">on_load =</span> on_load_query)</a></code></pre></div>
 <pre><code>## $artists
-## # A tibble: 2,367 x 1
-##    name           
-##    &lt;chr&gt;          
-##  1 Eminem         
-##  2 Eurythmics     
-##  3 Queen          
-##  4 The Police     
-##  5 A$AP Rocky     
-##  6 Tears For Fears
-##  7 Foals          
-##  8 Bag Raiders    
-##  9 Bright Eyes    
-## 10 Bob Dylan      
-## # ... with 2,357 more rows
+## # A tibble: 1 x 1
+##   name           
+##   &lt;chr&gt;          
+## 1 Municipal Waste
 ## 
 ## $albums
-## # A tibble: 2,367 x 1
-##    name                           
-##    &lt;chr&gt;                          
-##  1 Curtain Call (Deluxe)          
-##  2 Sweet Dreams (Are Made Of This)
-##  3 The Game (2011 Remaster)       
-##  4 Synchronicity (Remastered)     
-##  5 LONG.LIVE.A$AP (Deluxe Version)
-##  6 Songs From The Big Chair       
-##  7 Holy Fire                      
-##  8 Bag Raiders (Deluxe)           
-##  9 I&#39;m Wide Awake, It&#39;s Morning   
-## 10 Highway 61 Revisited           
-## # ... with 2,357 more rows
+## # A tibble: 1 x 1
+##   name              
+##   &lt;chr&gt;             
+## 1 Hazardous Mutation
 ## 
 ## $stats
 ## # A tibble: 12 x 2
@@ -286,22 +270,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  9 indexes_added             0
 ## 10 indexes_removed           0
 ## 11 constraints_added         0
-## 12 constraints_removed       0</code></pre>
+## 12 constraints_removed       0
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;neo&quot;  &quot;list&quot;</code></pre>
 </div>
 <div id="transform-elements-to-cypher-queries" class="section level3">
 <h3><span class="header-section-number">5.0.3</span> Transform elements to cypher queries</h3>
 <ul>
 <li><code>vec_to_cypher()</code> creates a list :</li>
 </ul>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">vec_to_cypher</span>(iris[<span class="dv">1</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="st">&quot;Species&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1"><span class="kw">vec_to_cypher</span>(iris[<span class="dv">1</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="st">&quot;Species&quot;</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;(:`Species` {`Sepal.Length`: &#39;5.1&#39;, `Sepal.Width`: &#39;3.5&#39;, `Petal.Length`: &#39;1.4&#39;})&quot;</code></pre>
 <ul>
 <li>and <code>vec_to_cypher_with_var()</code> creates a cypher call starting with a variable :</li>
 </ul>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">vec_to_cypher_with_var</span>(iris[<span class="dv">1</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="st">&quot;Species&quot;</span>, a)</a></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1"><span class="kw">vec_to_cypher_with_var</span>(iris[<span class="dv">1</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="st">&quot;Species&quot;</span>, a)</a></code></pre></div>
 <pre><code>## [1] &quot;(a:`Species` {`Sepal.Length`: &#39;5.1&#39;, `Sepal.Width`: &#39;3.5&#39;, `Petal.Length`: &#39;1.4&#39;})&quot;</code></pre>
 <p>This can be combined inside a cypher call:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="kw">paste</span>(<span class="st">&quot;MERGE&quot;</span>, <span class="kw">vec_to_cypher</span>(iris[<span class="dv">1</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="st">&quot;Species&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1"><span class="kw">paste</span>(<span class="st">&quot;MERGE&quot;</span>, <span class="kw">vec_to_cypher</span>(iris[<span class="dv">1</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="st">&quot;Species&quot;</span>))</a></code></pre></div>
 <pre><code>## [1] &quot;MERGE (:`Species` {`Sepal.Length`: &#39;5.1&#39;, `Sepal.Width`: &#39;3.5&#39;, `Petal.Length`: &#39;1.4&#39;})&quot;</code></pre>
 
 </div>

@@ -25,7 +25,7 @@
 <meta name="author" content="Colin Fay">
 
 
-<meta name="date" content="2018-11-07">
+<meta name="date" content="2019-01-25">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -67,7 +67,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -129,7 +129,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Using R & Neo4J</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#neo4r"><i class="fa fa-check"></i><b>1.1</b> <code>{neo4r}</code></a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
 <li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#installation"><i class="fa fa-check"></i><b>2.1</b> Installation</a><ul>
 <li class="chapter" data-level="2.1.1" data-path="intro.html"><a href="intro.html#dev-version-from-github"><i class="fa fa-check"></i><b>2.1.1</b> Dev version from GitHub</a></li>
@@ -188,22 +190,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 7</span> Visualise data</h1>
 <div id="with-ggraph" class="section level2">
 <h2><span class="header-section-number">7.1</span> With <code>{ggraph}</code> :</h2>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw">library</span>(ggraph)</a>
-<a class="sourceLine" id="cb51-2" data-line-number="2"><span class="st">&#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5;&#39;</span> <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb51-3" data-line-number="3"><span class="st">  </span><span class="kw">call_api</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb51-4" data-line-number="4"><span class="st">  </span><span class="kw">convert_to</span>(<span class="st">&quot;igraph&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb51-5" data-line-number="5"><span class="st">  </span><span class="kw">ggraph</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb51-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_node_label</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name, <span class="dt">color =</span> group)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb51-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_edge_link</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb51-8" data-line-number="8"><span class="st">  </span><span class="kw">theme_graph</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1"><span class="kw">library</span>(ggraph)</a>
+<a class="sourceLine" id="cb59-2" title="2"><span class="st">&#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 20;&#39;</span> <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb59-3" title="3"><span class="st">  </span><span class="kw">call_neo4j</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb59-4" title="4"><span class="st">  </span><span class="kw">convert_to</span>(<span class="st">&quot;igraph&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb59-5" title="5"><span class="st">  </span><span class="kw">ggraph</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb59-6" title="6"><span class="st">  </span><span class="kw">geom_node_label</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb59-7" title="7"><span class="st">  </span><span class="kw">geom_edge_link</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb59-8" title="8"><span class="st">  </span><span class="kw">theme_graph</span>()</a></code></pre></div>
 <pre><code>## Using `nicely` as default layout</code></pre>
-<p><img src="neo4j-r-book_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p><img src="neo4j-r-book_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 <div id="with-visnetwork" class="section level3">
 <h3><span class="header-section-number">7.1.1</span> With <code>{visNetwork}</code></h3>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1">network &lt;-<span class="st"> &#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5;&#39;</span> <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb53-2" data-line-number="2"><span class="st">  </span><span class="kw">call_api</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb53-3" data-line-number="3"><span class="st">  </span><span class="kw">convert_to</span>(<span class="st">&quot;visNetwork&quot;</span>)</a>
-<a class="sourceLine" id="cb53-4" data-line-number="4">visNetwork<span class="op">::</span><span class="kw">visNetwork</span>(network<span class="op">$</span>nodes, network<span class="op">$</span>relationships)</a></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1">network &lt;-<span class="st"> &#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 20;&#39;</span> <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb61-2" title="2"><span class="st">  </span><span class="kw">call_neo4j</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb61-3" title="3"><span class="st">  </span><span class="kw">convert_to</span>(<span class="st">&quot;visNetwork&quot;</span>)</a>
+<a class="sourceLine" id="cb61-4" title="4">visNetwork<span class="op">::</span><span class="kw">visNetwork</span>(network<span class="op">$</span>nodes, network<span class="op">$</span>relationships)</a></code></pre></div>
 
 </div>
 </div>

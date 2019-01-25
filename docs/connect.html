@@ -25,7 +25,7 @@
 <meta name="author" content="Colin Fay">
 
 
-<meta name="date" content="2018-11-07">
+<meta name="date" content="2019-01-25">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -67,7 +67,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -129,7 +129,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Using R & Neo4J</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#neo4r"><i class="fa fa-check"></i><b>1.1</b> <code>{neo4r}</code></a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
 <li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#installation"><i class="fa fa-check"></i><b>2.1</b> Installation</a><ul>
 <li class="chapter" data-level="2.1.1" data-path="intro.html"><a href="intro.html#dev-version-from-github"><i class="fa fa-check"></i><b>2.1.1</b> Dev version from GitHub</a></li>
@@ -190,62 +192,69 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.1</span> HTTP connection</h2>
 <p>You can start a new connection to your server with the <code>neo4j_api</code> object.</p>
 <p>You’ll need to call <code>neo4j_api$new</code>, with the url (with port specified if any), your user name, and your password.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(neo4r)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">con &lt;-<span class="st"> </span>neo4j_api<span class="op">$</span><span class="kw">new</span>(</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="dt">url =</span> <span class="st">&quot;http://localhost:7474&quot;</span>,</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="dt">user =</span> <span class="st">&quot;neo4j&quot;</span>, </a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="dt">password =</span> <span class="st">&quot;pouetpouet&quot;</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">  )</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">library</span>(neo4r)</a>
+<a class="sourceLine" id="cb10-2" title="2">con &lt;-<span class="st"> </span>neo4j_api<span class="op">$</span><span class="kw">new</span>(</a>
+<a class="sourceLine" id="cb10-3" title="3">  <span class="dt">url =</span> <span class="st">&quot;http://localhost:7474&quot;</span>,</a>
+<a class="sourceLine" id="cb10-4" title="4">  <span class="dt">user =</span> <span class="st">&quot;neo4j&quot;</span>, </a>
+<a class="sourceLine" id="cb10-5" title="5">  <span class="dt">password =</span> <span class="st">&quot;neo4j&quot;</span></a>
+<a class="sourceLine" id="cb10-6" title="6">  )</a></code></pre></div>
 <p>If you don’t want your password to be included in the script, you can use the <code>rstudioapi::askForPassword()</code> function, which will open a little widget asking to interactively enter your password.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">con &lt;-<span class="st"> </span>neo4j_api<span class="op">$</span><span class="kw">new</span>(</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="dt">url =</span> <span class="st">&quot;http://localhost:7474&quot;</span>,</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="dt">user =</span> <span class="st">&quot;neo4j&quot;</span>, </a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="dt">password =</span> rstudioapi<span class="op">::</span><span class="kw">askForPassword</span>()</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">  )</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">con &lt;-<span class="st"> </span>neo4j_api<span class="op">$</span><span class="kw">new</span>(</a>
+<a class="sourceLine" id="cb11-2" title="2">  <span class="dt">url =</span> <span class="st">&quot;http://localhost:7474&quot;</span>,</a>
+<a class="sourceLine" id="cb11-3" title="3">  <span class="dt">user =</span> <span class="st">&quot;neo4j&quot;</span>, </a>
+<a class="sourceLine" id="cb11-4" title="4">  <span class="dt">password =</span> rstudioapi<span class="op">::</span><span class="kw">askForPassword</span>()</a>
+<a class="sourceLine" id="cb11-5" title="5">  )</a></code></pre></div>
 <p>You can then check if you can access to the server by pinging it:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">con<span class="op">$</span><span class="kw">ping</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">con<span class="op">$</span><span class="kw">ping</span>()</a></code></pre></div>
 <pre><code>## [1] 200</code></pre>
 <p>Which should return 200 if the connexion succeeded.</p>
 </div>
 <div id="get-informations-about-the-connection" class="section level2">
 <h2><span class="header-section-number">3.2</span> Get informations about the connection :</h2>
 <p>You’ll then be able to get information about the server with:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Get Neo4J Version</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">con<span class="op">$</span><span class="kw">get_version</span>()</a></code></pre></div>
-<pre><code>## [1] &quot;3.4.0-rc02&quot;</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># List constaints (if any)</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">con<span class="op">$</span><span class="kw">get_constraints</span>()</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 3
-##   label  type       property_keys
-##   &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;        
-## 1 Band   UNIQUENESS name         
-## 2 City   UNIQUENESS name         
-## 3 record UNIQUENESS name</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># Get a vector of labels (if any)</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">con<span class="op">$</span><span class="kw">get_labels</span>()</a></code></pre></div>
-<pre><code>## # A tibble: 4 x 1
-##   labels
-##   &lt;chr&gt; 
-## 1 record
-## 2 artist
-## 3 Band  
-## 4 City</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># Get a vector of relationships (if any)</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">con<span class="op">$</span><span class="kw">get_relationships</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="co"># Get Neo4J Version</span></a>
+<a class="sourceLine" id="cb14-2" title="2">con<span class="op">$</span><span class="kw">get_version</span>()</a></code></pre></div>
+<pre><code>## [1] &quot;3.4.5&quot;</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="co"># List constaints (if any)</span></a>
+<a class="sourceLine" id="cb16-2" title="2">con<span class="op">$</span><span class="kw">get_constraints</span>()</a></code></pre></div>
+<pre><code>##         label       type property_keys
+## 1:     artist UNIQUENESS          name
+## 2: Maintainer UNIQUENESS          name
+## 3:       Band UNIQUENESS          name
+## 4:       City UNIQUENESS          name
+## 5:     record UNIQUENESS          name
+## 6:    Package UNIQUENESS          name
+## 7:     Author UNIQUENESS          name</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># Get a vector of labels (if any)</span></a>
+<a class="sourceLine" id="cb18-2" title="2">con<span class="op">$</span><span class="kw">get_labels</span>()</a></code></pre></div>
+<pre><code>## # A tibble: 7 x 1
+##   labels    
+##   &lt;chr&gt;     
+## 1 Package   
+## 2 Band      
+## 3 Maintainer
+## 4 record    
+## 5 artist    
+## 6 Author    
+## 7 City</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co"># Get a vector of relationships (if any)</span></a>
+<a class="sourceLine" id="cb20-2" title="2">con<span class="op">$</span><span class="kw">get_relationships</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 1
 ##   labels      
 ##   &lt;chr&gt;       
 ## 1 PLAYED_IN   
 ## 2 IS_FROM     
 ## 3 WAS_RECORDED</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># Get schema </span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">con<span class="op">$</span><span class="kw">get_schema</span>()</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 2
-##   label  property_keys
-##   &lt;chr&gt;  &lt;chr&gt;        
-## 1 City   name         
-## 2 Band   name         
-## 3 record name</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="co"># Get schema </span></a>
+<a class="sourceLine" id="cb22-2" title="2">con<span class="op">$</span><span class="kw">get_schema</span>()</a></code></pre></div>
+<pre><code>##         label property_keys
+## 1:       City          name
+## 2:       Band          name
+## 3: Maintainer          name
+## 4:     Author          name
+## 5:    Package          name
+## 6:     artist          name
+## 7:     record          name</code></pre>
 
 </div>
 </div>

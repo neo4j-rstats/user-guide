@@ -1,8 +1,8 @@
 # Retrieve data from the API {#retrieve}
 
-The API can be called either from the connection objet, or with the `call_api()` function. 
+The API can be called either from the connection objet, or with the `call_neo4j()` function. 
 
-The `call_api()` function takes several arguments : 
+The `call_neo4j()` function takes several arguments : 
 
 + `query` : the cypher query
 + `con` : the connexion object 
@@ -19,7 +19,7 @@ The user chooses wether or not to return a list of tibbles when calling the API.
 library(magrittr)
 
 'MATCH (r:record) -[:WAS_RECORDED] -> (b:Band) where b.formed = 1991 RETURN *;' %>%
-  call_api(con)
+  call_neo4j(con)
 ```
 
 By default, results are returned as an R list of tibbles. We think this is the more "truthful" way to implement the outputs regarding Neo4J calls. 
@@ -30,14 +30,14 @@ Results can also be returned in JSON:
 
 ```{r}
 'MATCH (r:record) -[:WAS_RECORDED] -> (b:Band) where b.formed = 1991 RETURN *;' %>%
-  call_api(con, output = "json")
+  call_neo4j(con, output = "json")
 ```
 
 If you turn the `type` argument to `"graph"`, you'll get a graph result: 
 
 ```{r}
 'MATCH p=()-[r:WAS_RECORDED]->() RETURN p LIMIT 5' %>%
-  call_api(con, type = "graph")
+  call_neo4j(con, type = "graph")
 ```
 
 The result is returned as one node or relationship by row. 
@@ -52,7 +52,7 @@ We have designed several functions to unnest the output :
 
 ```{r}
 res <- 'MATCH p=()-[r:WAS_RECORDED]->() RETURN p LIMIT 5;' %>%
-  call_api(con, type = "graph")
+  call_neo4j(con, type = "graph")
 unnest_nodes(res$nodes)
 ```
 
@@ -94,7 +94,7 @@ There are two convenient functions to extract nodes and relationships:
 
 ```{r}
 'MATCH p=()-[r:WAS_RECORDED]->() RETURN p LIMIT 5;' %>%
-  call_api(con, type = "graph") %>% 
+  call_neo4j(con, type = "graph") %>% 
   extract_nodes()
 ```
 
