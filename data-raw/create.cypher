@@ -114,3 +114,4 @@ CREATE
 (as_the_shadow)-[:WAS_RECORDED]->(emperor),
 (inthenightside)-[:WAS_RECORDED]->(emperor),
 (asorcery)-[:WAS_RECORDED]->(gorgoroth);
+

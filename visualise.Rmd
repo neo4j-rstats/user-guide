@@ -2,13 +2,24 @@
 
 ## With `{ggraph}` :
 
+Using the graph_object from previous chapter
+
+```{r}
+graph_object <- igraph::graph_from_data_frame(
+  d = G$relationships, 
+  directed = TRUE, 
+  vertices = G$nodes
+)
+plot(graph_object)
+```
+
+This can also be used with `{ggraph}` :
+
 ```{r}
 library(ggraph)
-'MATCH p=()-[r:WAS_RECORDED]->() RETURN p LIMIT 20;' %>%
-  call_neo4j(con, type = "graph") %>% 
-  convert_to("igraph") %>%
+graph_object %>%
   ggraph() + 
-  geom_node_label(aes(label = name)) +
+  geom_node_label(aes(label = label)) +
   geom_edge_link() + 
   theme_graph()
 ```
@@ -16,8 +27,19 @@ library(ggraph)
 ### With `{visNetwork}`
 
 ```{r eval = FALSE}
-network <- 'MATCH p=()-[r:WAS_RECORDED]->() RETURN p LIMIT 20;' %>%
-  call_neo4j(con, type = "graph") %>% 
-  convert_to("visNetwork")
-visNetwork::visNetwork(network$nodes, network$relationships)
+G <-"MATCH a=(p:Person {name: 'Tom Hanks'})-[r:ACTED_IN]->(m:Movie) RETURN a;" %>% 
+  call_neo4j(con, type = "graph") 
+
+# We'll just unnest the properties
+G$nodes <- G$nodes %>%
+  unnest_nodes(what = "properties")
+head(G$nodes)  
+
+# Turn the relationships :
+G$relationships <- G$relationships %>%
+  unnest_relationships() %>%
+  select(from = startNode, to = endNode, label = type)
+head(G$relationships)
+
+visNetwork::visNetwork(G$nodes, G$relationships)
 ```

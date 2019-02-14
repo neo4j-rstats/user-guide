@@ -25,7 +25,7 @@
 <meta name="author" content="Colin Fay">
 
 
-<meta name="date" content="2019-01-25">
+<meta name="date" content="2019-02-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -151,19 +151,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.0.1" data-path="send.html"><a href="send.html#reading-and-sending-a-cypher-file"><i class="fa fa-check"></i><b>5.0.1</b> Reading and sending a cypher file :</a></li>
 <li class="chapter" data-level="5.0.2" data-path="send.html"><a href="send.html#sending-csv-to-neo4j"><i class="fa fa-check"></i><b>5.0.2</b> Sending csv to Neo4J</a></li>
 <li class="chapter" data-level="5.0.3" data-path="send.html"><a href="send.html#transform-elements-to-cypher-queries"><i class="fa fa-check"></i><b>5.0.3</b> Transform elements to cypher queries</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="convert.html"><a href="convert.html"><i class="fa fa-check"></i><b>6</b> Convert output</a><ul>
-<li class="chapter" data-level="6.0.1" data-path="convert.html"><a href="convert.html#igraph"><i class="fa fa-check"></i><b>6.0.1</b> {igraph}</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="visualise.html"><a href="visualise.html"><i class="fa fa-check"></i><b>7</b> Visualise data</a><ul>
-<li class="chapter" data-level="7.1" data-path="visualise.html"><a href="visualise.html#with-ggraph"><i class="fa fa-check"></i><b>7.1</b> With <code>{ggraph}</code> :</a><ul>
-<li class="chapter" data-level="7.1.1" data-path="visualise.html"><a href="visualise.html#with-visnetwork"><i class="fa fa-check"></i><b>7.1.1</b> With <code>{visNetwork}</code></a></li>
+<li class="chapter" data-level="5.1" data-path="send.html"><a href="send.html#convert-for-common-graph-packages"><i class="fa fa-check"></i><b>5.1</b> Convert for common graph packages</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="send.html"><a href="send.html#igraph"><i class="fa fa-check"></i><b>5.1.1</b> {igraph}</a></li>
+<li class="chapter" data-level="5.1.2" data-path="send.html"><a href="send.html#visnetwork"><i class="fa fa-check"></i><b>5.1.2</b> {visNetwork}</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="appendixa.html"><a href="appendixa.html"><i class="fa fa-check"></i><b>8</b> Appendix A</a><ul>
-<li class="chapter" data-level="8.1" data-path="appendixa.html"><a href="appendixa.html#install-a-neo4j-server"><i class="fa fa-check"></i><b>8.1</b> Install a Neo4J server</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="appendixa.html"><a href="appendixa.html#on-a-linux-machine"><i class="fa fa-check"></i><b>8.1.1</b> On a Linux Machine</a></li>
-<li class="chapter" data-level="8.1.2" data-path="appendixa.html"><a href="appendixa.html#on-a-mac-machine"><i class="fa fa-check"></i><b>8.1.2</b> On a Mac Machine</a></li>
+<li class="chapter" data-level="6" data-path="visualise.html"><a href="visualise.html"><i class="fa fa-check"></i><b>6</b> Visualise data</a><ul>
+<li class="chapter" data-level="6.1" data-path="visualise.html"><a href="visualise.html#with-ggraph"><i class="fa fa-check"></i><b>6.1</b> With <code>{ggraph}</code> :</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="visualise.html"><a href="visualise.html#with-visnetwork"><i class="fa fa-check"></i><b>6.1.1</b> With <code>{visNetwork}</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="appendixa.html"><a href="appendixa.html"><i class="fa fa-check"></i><b>7</b> Appendix A</a><ul>
+<li class="chapter" data-level="7.1" data-path="appendixa.html"><a href="appendixa.html#install-a-neo4j-server"><i class="fa fa-check"></i><b>7.1</b> Install a Neo4J server</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="appendixa.html"><a href="appendixa.html#on-a-linux-machine"><i class="fa fa-check"></i><b>7.1.1</b> On a Linux Machine</a></li>
+<li class="chapter" data-level="7.1.2" data-path="appendixa.html"><a href="appendixa.html#on-a-mac-machine"><i class="fa fa-check"></i><b>7.1.2</b> On a Mac Machine</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -201,55 +202,57 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="rows-format" class="section level2">
 <h2><span class="header-section-number">4.1</span> “rows” format</h2>
 <p>The user chooses wether or not to return a list of tibbles when calling the API. You get as many objects as specified in the RETURN cypher statement.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">library</span>(magrittr)</a>
-<a class="sourceLine" id="cb24-2" title="2"></a>
-<a class="sourceLine" id="cb24-3" title="3"><span class="st">&#39;MATCH (r:record) -[:WAS_RECORDED] -&gt; (b:Band) where b.formed = 1991 RETURN *;&#39;</span> <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-4" title="4"><span class="st">  </span><span class="kw">call_neo4j</span>(con)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw">library</span>(magrittr)</a>
+<a class="sourceLine" id="cb21-2" title="2"></a>
+<a class="sourceLine" id="cb21-3" title="3"><span class="st">&#39;MATCH (r:record) -[:WAS_RECORDED] -&gt; (b:Band) where b.formed = 1991 RETURN *;&#39;</span> <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-4" title="4"><span class="st">  </span><span class="kw">call_neo4j</span>(con)</a></code></pre></div>
 <pre><code>## $b
-## # A tibble: 1 x 2
-##   name     formed
-##   &lt;chr&gt;     &lt;int&gt;
-## 1 Immortal   1991
+## # A tibble: 14 x 2
+##    name     formed
+##    &lt;chr&gt;     &lt;int&gt;
+##  1 Burzum     1991
+##  2 Burzum     1991
+##  3 Burzum     1991
+##  4 Burzum     1991
+##  5 Burzum     1991
+##  6 Burzum     1991
+##  7 Burzum     1991
+##  8 Enslaved   1991
+##  9 Enslaved   1991
+## 10 Enslaved   1991
+## 11 Enslaved   1991
+## 12 Immortal   1991
+## 13 Immortal   1991
+## 14 Immortal   1991
 ## 
 ## $r
-## # A tibble: 1 x 2
-##   release name          
-##     &lt;int&gt; &lt;chr&gt;         
-## 1    1993 Pure Holocaust
+## # A tibble: 14 x 2
+##    release name                         
+##      &lt;int&gt; &lt;chr&gt;                        
+##  1    1993 Filosofem                    
+##  2    1992 Hvis lyset tar oss           
+##  3    1992 Aske                         
+##  4    1992 Det som engang var           
+##  5    1992 Burzum                       
+##  6    1991 Demo II                      
+##  7    1991 Demo I                       
+##  8    1992 Hordanes Land                
+##  9    1993 Vikingligr Veldi             
+## 10    1991 Nema                         
+## 11    1992 Yggdrasill                   
+## 12    1992 Diabolical Fullmoon Mysticism
+## 13    1993 Pure Holocaust               
+## 14    1991 Immortal                     
 ## 
 ## attr(,&quot;class&quot;)
 ## [1] &quot;neo&quot;  &quot;neo&quot;  &quot;list&quot;</code></pre>
 <p>By default, results are returned as an R list of tibbles. We think this is the more “truthful” way to implement the outputs regarding Neo4J calls.</p>
 <p>For example, when you want to return two nodes types, you’ll get two results, in the form of two tibbles (what we’ve seen just before) - the result is a two elements list with each element being labelled the way it has been specified in the Cypher query.</p>
 <p>Results can also be returned in JSON:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="st">&#39;MATCH (r:record) -[:WAS_RECORDED] -&gt; (b:Band) where b.formed = 1991 RETURN *;&#39;</span> <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-2" title="2"><span class="st">  </span><span class="kw">call_neo4j</span>(con, <span class="dt">output =</span> <span class="st">&quot;json&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="st">&#39;MATCH (r:record) -[:WAS_RECORDED] -&gt; (b:Band) where b.formed = 1991 RETURN *;&#39;</span> <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-2" title="2"><span class="st">  </span><span class="kw">call_neo4j</span>(con, <span class="dt">output =</span> <span class="st">&quot;json&quot;</span>)</a></code></pre></div>
 <pre><code>## [
 ##   [
-##     {
-##       &quot;row&quot;: [
-##         {
-##           &quot;name&quot;: [&quot;Burzum&quot;],
-##           &quot;formed&quot;: [1991]
-##         },
-##         {
-##           &quot;release&quot;: [1992],
-##           &quot;name&quot;: [&quot;Hvis lyset tar oss&quot;]
-##         }
-##       ],
-##       &quot;meta&quot;: [
-##         {
-##           &quot;id&quot;: [12591],
-##           &quot;type&quot;: [&quot;node&quot;],
-##           &quot;deleted&quot;: [false]
-##         },
-##         {
-##           &quot;id&quot;: [13608],
-##           &quot;type&quot;: [&quot;node&quot;],
-##           &quot;deleted&quot;: [false]
-##         }
-##       ]
-##     },
 ##     {
 ##       &quot;row&quot;: [
 ##         {
@@ -263,12 +266,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [12591],
+##           &quot;id&quot;: [16020],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [13613],
+##           &quot;id&quot;: [16058],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -281,18 +284,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##           &quot;formed&quot;: [1991]
 ##         },
 ##         {
-##           &quot;release&quot;: [1991],
-##           &quot;name&quot;: [&quot;Demo I&quot;]
+##           &quot;release&quot;: [1992],
+##           &quot;name&quot;: [&quot;Hvis lyset tar oss&quot;]
 ##         }
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [12591],
+##           &quot;id&quot;: [16020],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [13594],
+##           &quot;id&quot;: [16053],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -311,12 +314,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [12591],
+##           &quot;id&quot;: [16020],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [13606],
+##           &quot;id&quot;: [16051],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -335,12 +338,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [12591],
+##           &quot;id&quot;: [16020],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [13600],
+##           &quot;id&quot;: [16045],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -359,12 +362,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [12591],
+##           &quot;id&quot;: [16020],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [13599],
+##           &quot;id&quot;: [16044],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -383,12 +386,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [12591],
+##           &quot;id&quot;: [16020],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [13597],
+##           &quot;id&quot;: [16042],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -397,46 +400,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     {
 ##       &quot;row&quot;: [
 ##         {
-##           &quot;name&quot;: [&quot;Enslaved&quot;],
+##           &quot;name&quot;: [&quot;Burzum&quot;],
 ##           &quot;formed&quot;: [1991]
 ##         },
 ##         {
 ##           &quot;release&quot;: [1991],
-##           &quot;name&quot;: [&quot;Nema&quot;]
+##           &quot;name&quot;: [&quot;Demo I&quot;]
 ##         }
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [12595],
+##           &quot;id&quot;: [16020],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [13598],
-##           &quot;type&quot;: [&quot;node&quot;],
-##           &quot;deleted&quot;: [false]
-##         }
-##       ]
-##     },
-##     {
-##       &quot;row&quot;: [
-##         {
-##           &quot;name&quot;: [&quot;Enslaved&quot;],
-##           &quot;formed&quot;: [1991]
-##         },
-##         {
-##           &quot;release&quot;: [1992],
-##           &quot;name&quot;: [&quot;Yggdrasill&quot;]
-##         }
-##       ],
-##       &quot;meta&quot;: [
-##         {
-##           &quot;id&quot;: [12595],
-##           &quot;type&quot;: [&quot;node&quot;],
-##           &quot;deleted&quot;: [false]
-##         },
-##         {
-##           &quot;id&quot;: [13604],
+##           &quot;id&quot;: [16039],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -455,12 +434,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [12595],
+##           &quot;id&quot;: [16024],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [13610],
+##           &quot;id&quot;: [16055],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -479,12 +458,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [12595],
+##           &quot;id&quot;: [16024],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [13615],
+##           &quot;id&quot;: [16060],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -493,22 +472,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##     {
 ##       &quot;row&quot;: [
 ##         {
-##           &quot;name&quot;: [&quot;Immortal&quot;],
+##           &quot;name&quot;: [&quot;Enslaved&quot;],
 ##           &quot;formed&quot;: [1991]
 ##         },
 ##         {
 ##           &quot;release&quot;: [1991],
-##           &quot;name&quot;: [&quot;Immortal&quot;]
+##           &quot;name&quot;: [&quot;Nema&quot;]
 ##         }
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [12598],
+##           &quot;id&quot;: [16024],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [13596],
+##           &quot;id&quot;: [16043],
+##           &quot;type&quot;: [&quot;node&quot;],
+##           &quot;deleted&quot;: [false]
+##         }
+##       ]
+##     },
+##     {
+##       &quot;row&quot;: [
+##         {
+##           &quot;name&quot;: [&quot;Enslaved&quot;],
+##           &quot;formed&quot;: [1991]
+##         },
+##         {
+##           &quot;release&quot;: [1992],
+##           &quot;name&quot;: [&quot;Yggdrasill&quot;]
+##         }
+##       ],
+##       &quot;meta&quot;: [
+##         {
+##           &quot;id&quot;: [16024],
+##           &quot;type&quot;: [&quot;node&quot;],
+##           &quot;deleted&quot;: [false]
+##         },
+##         {
+##           &quot;id&quot;: [16049],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -527,12 +530,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [12598],
+##           &quot;id&quot;: [16027],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [13601],
+##           &quot;id&quot;: [16046],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -551,12 +554,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       ],
 ##       &quot;meta&quot;: [
 ##         {
-##           &quot;id&quot;: [12598],
+##           &quot;id&quot;: [16027],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         },
 ##         {
-##           &quot;id&quot;: [13621],
+##           &quot;id&quot;: [16066],
+##           &quot;type&quot;: [&quot;node&quot;],
+##           &quot;deleted&quot;: [false]
+##         }
+##       ]
+##     },
+##     {
+##       &quot;row&quot;: [
+##         {
+##           &quot;name&quot;: [&quot;Immortal&quot;],
+##           &quot;formed&quot;: [1991]
+##         },
+##         {
+##           &quot;release&quot;: [1991],
+##           &quot;name&quot;: [&quot;Immortal&quot;]
+##         }
+##       ],
+##       &quot;meta&quot;: [
+##         {
+##           &quot;id&quot;: [16027],
+##           &quot;type&quot;: [&quot;node&quot;],
+##           &quot;deleted&quot;: [false]
+##         },
+##         {
+##           &quot;id&quot;: [16041],
 ##           &quot;type&quot;: [&quot;node&quot;],
 ##           &quot;deleted&quot;: [false]
 ##         }
@@ -565,28 +592,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   ]
 ## ]</code></pre>
 <p>If you turn the <code>type</code> argument to <code>&quot;graph&quot;</code>, you’ll get a graph result:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="st">&#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5&#39;</span> <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb28-2" title="2"><span class="st">  </span><span class="kw">call_neo4j</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="st">&#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5&#39;</span> <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb25-2" title="2"><span class="st">  </span><span class="kw">call_neo4j</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>)</a></code></pre></div>
 <pre><code>## $nodes
 ## # A tibble: 6 x 3
 ##   id    label     properties
 ##   &lt;chr&gt; &lt;list&gt;    &lt;list&gt;    
-## 1 13608 &lt;chr [1]&gt; &lt;list [2]&gt;
-## 2 12591 &lt;chr [1]&gt; &lt;list [2]&gt;
-## 3 13613 &lt;chr [1]&gt; &lt;list [2]&gt;
-## 4 13594 &lt;chr [1]&gt; &lt;list [2]&gt;
-## 5 13606 &lt;chr [1]&gt; &lt;list [2]&gt;
-## 6 13600 &lt;chr [1]&gt; &lt;list [2]&gt;
+## 1 16020 &lt;chr [1]&gt; &lt;list [2]&gt;
+## 2 16058 &lt;chr [1]&gt; &lt;list [2]&gt;
+## 3 16053 &lt;chr [1]&gt; &lt;list [2]&gt;
+## 4 16051 &lt;chr [1]&gt; &lt;list [2]&gt;
+## 5 16045 &lt;chr [1]&gt; &lt;list [2]&gt;
+## 6 16044 &lt;chr [1]&gt; &lt;list [2]&gt;
 ## 
 ## $relationships
 ## # A tibble: 5 x 5
 ##   id    type         startNode endNode properties
 ##   &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;   &lt;list&gt;    
-## 1 21824 WAS_RECORDED 13608     12591   &lt;list [0]&gt;
-## 2 21825 WAS_RECORDED 13613     12591   &lt;list [0]&gt;
-## 3 21819 WAS_RECORDED 13594     12591   &lt;list [0]&gt;
-## 4 21823 WAS_RECORDED 13606     12591   &lt;list [0]&gt;
-## 5 21822 WAS_RECORDED 13600     12591   &lt;list [0]&gt;
+## 1 23757 WAS_RECORDED 16058     16020   &lt;list [0]&gt;
+## 2 23756 WAS_RECORDED 16053     16020   &lt;list [0]&gt;
+## 3 23755 WAS_RECORDED 16051     16020   &lt;list [0]&gt;
+## 4 23754 WAS_RECORDED 16045     16020   &lt;list [0]&gt;
+## 5 23753 WAS_RECORDED 16044     16020   &lt;list [0]&gt;
 ## 
 ## attr(,&quot;class&quot;)
 ## [1] &quot;neo&quot;  &quot;list&quot;</code></pre>
@@ -599,99 +626,99 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><code>unnest_nodes()</code>, that can unnest a node dataframe :</li>
 </ul>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">res &lt;-<span class="st"> &#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5;&#39;</span> <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb30-2" title="2"><span class="st">  </span><span class="kw">call_neo4j</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>)</a>
-<a class="sourceLine" id="cb30-3" title="3"><span class="kw">unnest_nodes</span>(res<span class="op">$</span>nodes)</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">res &lt;-<span class="st"> &#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5;&#39;</span> <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-2" title="2"><span class="st">  </span><span class="kw">call_neo4j</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>)</a>
+<a class="sourceLine" id="cb27-3" title="3"><span class="kw">unnest_nodes</span>(res<span class="op">$</span>nodes)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 5
-##   id    label  release name               formed
-##   &lt;chr&gt; &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;               &lt;int&gt;
-## 1 13608 record    1992 Hvis lyset tar oss     NA
-## 2 12591 Band        NA Burzum               1991
-## 3 13613 record    1993 Filosofem              NA
-## 4 13594 record    1991 Demo I                 NA
-## 5 13606 record    1992 Aske                   NA
-## 6 13600 record    1992 Det som engang var     NA</code></pre>
+##   id    value  name               formed release
+##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;               &lt;int&gt;   &lt;int&gt;
+## 1 16020 Band   Burzum               1991      NA
+## 2 16058 record Filosofem              NA    1993
+## 3 16053 record Hvis lyset tar oss     NA    1992
+## 4 16051 record Aske                   NA    1992
+## 5 16045 record Det som engang var     NA    1992
+## 6 16044 record Burzum                 NA    1992</code></pre>
 <p>Note that this function will return <code>NA</code> for the properties that aren’t in a node. For example here, we have no ‘formed’ information for the record nodes .</p>
 <p>On the long run, and this is not {neo4r} specific but Neo4J related, a good practice is to have a “name” propertie on each node, so this column will be full here.</p>
 <p>Also, it is possible to unnest either the properties or the labels :</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">res<span class="op">$</span>nodes <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb32-2" title="2"><span class="st">  </span><span class="kw">unnest_nodes</span>(<span class="dt">what =</span> <span class="st">&quot;properties&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">res<span class="op">$</span>nodes <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb29-2" title="2"><span class="st">  </span><span class="kw">unnest_nodes</span>(<span class="dt">what =</span> <span class="st">&quot;properties&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 5
-##   id    label     release name               formed
-##   &lt;chr&gt; &lt;list&gt;      &lt;int&gt; &lt;chr&gt;               &lt;int&gt;
-## 1 13608 &lt;chr [1]&gt;    1992 Hvis lyset tar oss     NA
-## 2 12591 &lt;chr [1]&gt;      NA Burzum               1991
-## 3 13613 &lt;chr [1]&gt;    1993 Filosofem              NA
-## 4 13594 &lt;chr [1]&gt;    1991 Demo I                 NA
-## 5 13606 &lt;chr [1]&gt;    1992 Aske                   NA
-## 6 13600 &lt;chr [1]&gt;    1992 Det som engang var     NA</code></pre>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">res<span class="op">$</span>nodes <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb34-2" title="2"><span class="st">  </span><span class="kw">unnest_nodes</span>(<span class="dt">what =</span> <span class="st">&quot;label&quot;</span>)</a></code></pre></div>
+##   id    label     name               formed release
+##   &lt;chr&gt; &lt;list&gt;    &lt;chr&gt;               &lt;int&gt;   &lt;int&gt;
+## 1 16020 &lt;chr [1]&gt; Burzum               1991      NA
+## 2 16058 &lt;chr [1]&gt; Filosofem              NA    1993
+## 3 16053 &lt;chr [1]&gt; Hvis lyset tar oss     NA    1992
+## 4 16051 &lt;chr [1]&gt; Aske                   NA    1992
+## 5 16045 &lt;chr [1]&gt; Det som engang var     NA    1992
+## 6 16044 &lt;chr [1]&gt; Burzum                 NA    1992</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">res<span class="op">$</span>nodes <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-2" title="2"><span class="st">  </span><span class="kw">unnest_nodes</span>(<span class="dt">what =</span> <span class="st">&quot;label&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
-##   id    properties label 
+##   id    properties value 
 ##   &lt;chr&gt; &lt;list&gt;     &lt;chr&gt; 
-## 1 13608 &lt;list [2]&gt; record
-## 2 12591 &lt;list [2]&gt; Band  
-## 3 13613 &lt;list [2]&gt; record
-## 4 13594 &lt;list [2]&gt; record
-## 5 13606 &lt;list [2]&gt; record
-## 6 13600 &lt;list [2]&gt; record</code></pre>
+## 1 16020 &lt;list [2]&gt; Band  
+## 2 16058 &lt;list [2]&gt; record
+## 3 16053 &lt;list [2]&gt; record
+## 4 16051 &lt;list [2]&gt; record
+## 5 16045 &lt;list [2]&gt; record
+## 6 16044 &lt;list [2]&gt; record</code></pre>
 <ul>
 <li><code>unnest_relationships()</code></li>
 </ul>
 <p>There is only one nested column in the relationship table, thus the function is quite straightforward :</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="kw">unnest_relationships</span>(res<span class="op">$</span>relationships)</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="kw">unnest_relationships</span>(res<span class="op">$</span>relationships)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 5
-##   id    type         startNode endNode properties
-##   &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;     
-## 1 21824 WAS_RECORDED 13608     12591   &lt;NA&gt;      
-## 2 21825 WAS_RECORDED 13613     12591   &lt;NA&gt;      
-## 3 21819 WAS_RECORDED 13594     12591   &lt;NA&gt;      
-## 4 21823 WAS_RECORDED 13606     12591   &lt;NA&gt;      
-## 5 21822 WAS_RECORDED 13600     12591   &lt;NA&gt;</code></pre>
+##   id    type         startNode endNode value
+##   &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;   &lt;lgl&gt;
+## 1 23757 WAS_RECORDED 16058     16020   NA   
+## 2 23756 WAS_RECORDED 16053     16020   NA   
+## 3 23755 WAS_RECORDED 16051     16020   NA   
+## 4 23754 WAS_RECORDED 16045     16020   NA   
+## 5 23753 WAS_RECORDED 16044     16020   NA</code></pre>
 <ul>
 <li><code>unnest_graph()</code></li>
 </ul>
 <p>This function takes a graph results, and does <code>unnest_nodes</code> and <code>unnest_relationships</code>.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw">unnest_graph</span>(res)</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="kw">unnest_graph</span>(res)</a></code></pre></div>
 <pre><code>## $nodes
 ## # A tibble: 6 x 5
-##   id    label  release name               formed
-##   &lt;chr&gt; &lt;chr&gt;    &lt;int&gt; &lt;chr&gt;               &lt;int&gt;
-## 1 13608 record    1992 Hvis lyset tar oss     NA
-## 2 12591 Band        NA Burzum               1991
-## 3 13613 record    1993 Filosofem              NA
-## 4 13594 record    1991 Demo I                 NA
-## 5 13606 record    1992 Aske                   NA
-## 6 13600 record    1992 Det som engang var     NA
+##   id    value  name               formed release
+##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;               &lt;int&gt;   &lt;int&gt;
+## 1 16020 Band   Burzum               1991      NA
+## 2 16058 record Filosofem              NA    1993
+## 3 16053 record Hvis lyset tar oss     NA    1992
+## 4 16051 record Aske                   NA    1992
+## 5 16045 record Det som engang var     NA    1992
+## 6 16044 record Burzum                 NA    1992
 ## 
 ## $relationships
 ## # A tibble: 5 x 5
-##   id    type         startNode endNode properties
-##   &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;     
-## 1 21824 WAS_RECORDED 13608     12591   &lt;NA&gt;      
-## 2 21825 WAS_RECORDED 13613     12591   &lt;NA&gt;      
-## 3 21819 WAS_RECORDED 13594     12591   &lt;NA&gt;      
-## 4 21823 WAS_RECORDED 13606     12591   &lt;NA&gt;      
-## 5 21822 WAS_RECORDED 13600     12591   &lt;NA&gt;      
+##   id    type         startNode endNode value
+##   &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;   &lt;lgl&gt;
+## 1 23757 WAS_RECORDED 16058     16020   NA   
+## 2 23756 WAS_RECORDED 16053     16020   NA   
+## 3 23755 WAS_RECORDED 16051     16020   NA   
+## 4 23754 WAS_RECORDED 16045     16020   NA   
+## 5 23753 WAS_RECORDED 16044     16020   NA   
 ## 
 ## attr(,&quot;class&quot;)
 ## [1] &quot;neo&quot;  &quot;list&quot;</code></pre>
 <div id="extraction" class="section level3">
 <h3><span class="header-section-number">4.2.1</span> Extraction</h3>
 <p>There are two convenient functions to extract nodes and relationships:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="st">&#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5;&#39;</span> <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb40-2" title="2"><span class="st">  </span><span class="kw">call_neo4j</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb40-3" title="3"><span class="st">  </span><span class="kw">extract_nodes</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="st">&#39;MATCH p=()-[r:WAS_RECORDED]-&gt;() RETURN p LIMIT 5;&#39;</span> <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-2" title="2"><span class="st">  </span><span class="kw">call_neo4j</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-3" title="3"><span class="st">  </span><span class="kw">extract_nodes</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##   id    label     properties
 ##   &lt;chr&gt; &lt;list&gt;    &lt;list&gt;    
-## 1 13608 &lt;chr [1]&gt; &lt;list [2]&gt;
-## 2 12591 &lt;chr [1]&gt; &lt;list [2]&gt;
-## 3 13613 &lt;chr [1]&gt; &lt;list [2]&gt;
-## 4 13594 &lt;chr [1]&gt; &lt;list [2]&gt;
-## 5 13606 &lt;chr [1]&gt; &lt;list [2]&gt;
-## 6 13600 &lt;chr [1]&gt; &lt;list [2]&gt;</code></pre>
+## 1 16020 &lt;chr [1]&gt; &lt;list [2]&gt;
+## 2 16058 &lt;chr [1]&gt; &lt;list [2]&gt;
+## 3 16053 &lt;chr [1]&gt; &lt;list [2]&gt;
+## 4 16051 &lt;chr [1]&gt; &lt;list [2]&gt;
+## 5 16045 &lt;chr [1]&gt; &lt;list [2]&gt;
+## 6 16044 &lt;chr [1]&gt; &lt;list [2]&gt;</code></pre>
 
 </div>
 </div>
