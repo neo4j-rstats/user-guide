@@ -1,4 +1,4 @@
-## Convert for common graph packages
+# Convert for common graph packages
 
 ### {igraph}
 
