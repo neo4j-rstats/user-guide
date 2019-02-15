@@ -25,7 +25,7 @@
 <meta name="author" content="Colin Fay">
 
 
-<meta name="date" content="2019-02-14">
+<meta name="date" content="2019-02-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -229,13 +229,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="co"># List constaints (if any)</span></a>
 <a class="sourceLine" id="cb43-2" title="2">con<span class="op">$</span><span class="kw">get_constraints</span>()</a></code></pre></div>
 <pre><code>##         label       type property_keys
-## 1:     artist UNIQUENESS          name
-## 2: Maintainer UNIQUENESS          name
-## 3:       Band UNIQUENESS          name
+## 1:       Band UNIQUENESS          name
+## 2:     record UNIQUENESS          name
+## 3:     Author UNIQUENESS          name
 ## 4:       City UNIQUENESS          name
-## 5:     record UNIQUENESS          name
+## 5:     artist UNIQUENESS          name
 ## 6:    Package UNIQUENESS          name
-## 7:     Author UNIQUENESS          name</code></pre>
+## 7: Maintainer UNIQUENESS          name</code></pre>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="co"># Create the query that will create the nodes and relationships</span></a>
 <a class="sourceLine" id="cb45-2" title="2">on_load_query &lt;-<span class="st"> &#39;MERGE (a:artist { name: csvLine.artist})</span></a>
 <a class="sourceLine" id="cb45-3" title="3"><span class="st">MERGE (al:album {name: csvLine.album_name})</span></a>

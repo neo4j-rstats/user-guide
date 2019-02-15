@@ -25,7 +25,7 @@
 <meta name="author" content="Colin Fay">
 
 
-<meta name="date" content="2019-02-14">
+<meta name="date" content="2019-02-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -219,29 +219,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co"># List constaints (if any)</span></a>
 <a class="sourceLine" id="cb13-2" title="2">con<span class="op">$</span><span class="kw">get_constraints</span>()</a></code></pre></div>
 <pre><code>##         label       type property_keys
-## 1:     artist UNIQUENESS          name
-## 2: Maintainer UNIQUENESS          name
-## 3:       Band UNIQUENESS          name
+## 1:       Band UNIQUENESS          name
+## 2:     record UNIQUENESS          name
+## 3:     Author UNIQUENESS          name
 ## 4:       City UNIQUENESS          name
-## 5:     record UNIQUENESS          name
+## 5:     artist UNIQUENESS          name
 ## 6:    Package UNIQUENESS          name
-## 7:     Author UNIQUENESS          name</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># Get a vector of labels (if any)</span></a>
+## 7: Maintainer UNIQUENESS          name</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># Get a table of labels (if any)</span></a>
 <a class="sourceLine" id="cb15-2" title="2">con<span class="op">$</span><span class="kw">get_labels</span>()</a></code></pre></div>
-<pre><code>## # A tibble: 10 x 1
+<pre><code>## # A tibble: 11 x 1
 ##    labels    
 ##    &lt;chr&gt;     
-##  1 Maintainer
-##  2 City      
-##  3 Author    
-##  4 Movie     
-##  5 Person    
-##  6 Package   
-##  7 album     
-##  8 record    
-##  9 Band      
-## 10 artist</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="co"># Get a vector of relationships (if any)</span></a>
+##  1 Movie     
+##  2 Character 
+##  3 record    
+##  4 artist    
+##  5 album     
+##  6 Maintainer
+##  7 Person    
+##  8 Band      
+##  9 City      
+## 10 Package   
+## 11 Author</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="co"># Get a table of relationships (if any)</span></a>
 <a class="sourceLine" id="cb17-2" title="2">con<span class="op">$</span><span class="kw">get_relationships</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 10 x 1
 ##    labels      
@@ -256,8 +257,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8 WROTE       
 ##  9 FOLLOWS     
 ## 10 REVIEWED</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="co"># Get schema </span></a>
-<a class="sourceLine" id="cb19-2" title="2">con<span class="op">$</span><span class="kw">get_schema</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="co"># Get index </span></a>
+<a class="sourceLine" id="cb19-2" title="2">con<span class="op">$</span><span class="kw">get_index</span>()</a></code></pre></div>
 <pre><code>##         label property_keys
 ## 1:       Band          name
 ## 2:     Author          name

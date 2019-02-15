@@ -42,11 +42,11 @@ You'll then be able to get information about the server with:
 con$get_version()
 # List constaints (if any)
 con$get_constraints()
-# Get a vector of labels (if any)
+# Get a table of labels (if any)
 con$get_labels()
-# Get a vector of relationships (if any)
+# Get a table of relationships (if any)
 con$get_relationships()
-# Get schema 
-con$get_schema()
+# Get index 
+con$get_index()
 ```
 

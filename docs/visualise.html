@@ -25,7 +25,7 @@
 <meta name="author" content="Colin Fay">
 
 
-<meta name="date" content="2019-02-14">
+<meta name="date" content="2019-02-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -192,39 +192,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="with-ggraph" class="section level2">
 <h2><span class="header-section-number">7.1</span> With <code>{ggraph}</code> :</h2>
 <p>Using the graph_object from previous chapter</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1">graph_object &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">graph_from_data_frame</span>(</a>
-<a class="sourceLine" id="cb70-2" title="2">  <span class="dt">d =</span> G<span class="op">$</span>relationships, </a>
-<a class="sourceLine" id="cb70-3" title="3">  <span class="dt">directed =</span> <span class="ot">TRUE</span>, </a>
-<a class="sourceLine" id="cb70-4" title="4">  <span class="dt">vertices =</span> G<span class="op">$</span>nodes</a>
-<a class="sourceLine" id="cb70-5" title="5">)</a>
-<a class="sourceLine" id="cb70-6" title="6"><span class="kw">plot</span>(graph_object)</a></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1">graph_object &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw">graph_from_data_frame</span>(</a>
+<a class="sourceLine" id="cb61-2" title="2">  <span class="dt">d =</span> G<span class="op">$</span>relationships, </a>
+<a class="sourceLine" id="cb61-3" title="3">  <span class="dt">directed =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb61-4" title="4">  <span class="dt">vertices =</span> G<span class="op">$</span>nodes</a>
+<a class="sourceLine" id="cb61-5" title="5">)</a>
+<a class="sourceLine" id="cb61-6" title="6"><span class="kw">plot</span>(graph_object)</a></code></pre></div>
 <p><img src="neo4j-r-book_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <p>This can also be used with <code>{ggraph}</code> :</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1"><span class="kw">library</span>(ggraph)</a>
-<a class="sourceLine" id="cb71-2" title="2">graph_object <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb71-3" title="3"><span class="st">  </span><span class="kw">ggraph</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb71-4" title="4"><span class="st">  </span><span class="kw">geom_node_label</span>(<span class="kw">aes</span>(<span class="dt">label =</span> label)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb71-5" title="5"><span class="st">  </span><span class="kw">geom_edge_link</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb71-6" title="6"><span class="st">  </span><span class="kw">theme_graph</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1"><span class="kw">library</span>(ggraph)</a>
+<a class="sourceLine" id="cb62-2" title="2">graph_object <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb62-3" title="3"><span class="st">  </span><span class="kw">ggraph</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb62-4" title="4"><span class="st">  </span><span class="kw">geom_node_label</span>(<span class="kw">aes</span>(<span class="dt">label =</span> label)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb62-5" title="5"><span class="st">  </span><span class="kw">geom_edge_link</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb62-6" title="6"><span class="st">  </span><span class="kw">theme_graph</span>()</a></code></pre></div>
 <pre><code>## Using `nicely` as default layout</code></pre>
 <p><img src="neo4j-r-book_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <div id="with-visnetwork" class="section level3">
 <h3><span class="header-section-number">7.1.1</span> With <code>{visNetwork}</code></h3>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1">G &lt;-<span class="st">&quot;MATCH a=(p:Person {name: &#39;Tom Hanks&#39;})-[r:ACTED_IN]-&gt;(m:Movie) RETURN a;&quot;</span> <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb73-2" title="2"><span class="st">  </span><span class="kw">call_neo4j</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) </a>
-<a class="sourceLine" id="cb73-3" title="3"></a>
-<a class="sourceLine" id="cb73-4" title="4"><span class="co"># We&#39;ll just unnest the properties</span></a>
-<a class="sourceLine" id="cb73-5" title="5">G<span class="op">$</span>nodes &lt;-<span class="st"> </span>G<span class="op">$</span>nodes <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb73-6" title="6"><span class="st">  </span><span class="kw">unnest_nodes</span>(<span class="dt">what =</span> <span class="st">&quot;properties&quot;</span>)</a>
-<a class="sourceLine" id="cb73-7" title="7"><span class="kw">head</span>(G<span class="op">$</span>nodes)  </a>
-<a class="sourceLine" id="cb73-8" title="8"></a>
-<a class="sourceLine" id="cb73-9" title="9"><span class="co"># Turn the relationships :</span></a>
-<a class="sourceLine" id="cb73-10" title="10">G<span class="op">$</span>relationships &lt;-<span class="st"> </span>G<span class="op">$</span>relationships <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb73-11" title="11"><span class="st">  </span><span class="kw">unnest_relationships</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb73-12" title="12"><span class="st">  </span><span class="kw">select</span>(<span class="dt">from =</span> startNode, <span class="dt">to =</span> endNode, <span class="dt">label =</span> type)</a>
-<a class="sourceLine" id="cb73-13" title="13"><span class="kw">head</span>(G<span class="op">$</span>relationships)</a>
-<a class="sourceLine" id="cb73-14" title="14"></a>
-<a class="sourceLine" id="cb73-15" title="15">visNetwork<span class="op">::</span><span class="kw">visNetwork</span>(G<span class="op">$</span>nodes, G<span class="op">$</span>relationships)</a></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1">G &lt;-<span class="st">&quot;MATCH a=(p:Person {name: &#39;Tom Hanks&#39;})-[r:ACTED_IN]-&gt;(m:Movie) RETURN a;&quot;</span> <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb64-2" title="2"><span class="st">  </span><span class="kw">call_neo4j</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) </a>
+<a class="sourceLine" id="cb64-3" title="3"></a>
+<a class="sourceLine" id="cb64-4" title="4"><span class="co"># We&#39;ll just unnest the properties</span></a>
+<a class="sourceLine" id="cb64-5" title="5">G<span class="op">$</span>nodes &lt;-<span class="st"> </span>G<span class="op">$</span>nodes <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb64-6" title="6"><span class="st">  </span><span class="kw">unnest_nodes</span>(<span class="dt">what =</span> <span class="st">&quot;properties&quot;</span>)</a>
+<a class="sourceLine" id="cb64-7" title="7"><span class="kw">head</span>(G<span class="op">$</span>nodes)  </a>
+<a class="sourceLine" id="cb64-8" title="8"></a>
+<a class="sourceLine" id="cb64-9" title="9"><span class="co"># Turn the relationships :</span></a>
+<a class="sourceLine" id="cb64-10" title="10">G<span class="op">$</span>relationships &lt;-<span class="st"> </span>G<span class="op">$</span>relationships <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb64-11" title="11"><span class="st">  </span><span class="kw">unnest_relationships</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb64-12" title="12"><span class="st">  </span><span class="kw">select</span>(<span class="dt">from =</span> startNode, <span class="dt">to =</span> endNode, <span class="dt">label =</span> type)</a>
+<a class="sourceLine" id="cb64-13" title="13"><span class="kw">head</span>(G<span class="op">$</span>relationships)</a>
+<a class="sourceLine" id="cb64-14" title="14"></a>
+<a class="sourceLine" id="cb64-15" title="15">visNetwork<span class="op">::</span><span class="kw">visNetwork</span>(G<span class="op">$</span>nodes, G<span class="op">$</span>relationships)</a></code></pre></div>
 
 </div>
 </div>
