@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Using R &amp; Neo4J</title>
+  <title>Chapter 5 Sending data to the API | Using R &amp; Neo4J</title>
   <meta name="description" content="A Guide About Using Neo4J and R">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Using R &amp; Neo4J" />
+  <meta property="og:title" content="Chapter 5 Sending data to the API | Using R &amp; Neo4J" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Using R &amp; Neo4J" />
+  <meta name="twitter:title" content="Chapter 5 Sending data to the API | Using R &amp; Neo4J" />
   
   <meta name="twitter:description" content="A Guide About Using Neo4J and R" />
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Colin Fay">
 
 
-<meta name="date" content="2019-02-15">
+<meta name="date" content="2019-06-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,6 +36,7 @@
 <link rel="next" href="convert-for-common-graph-packages.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -135,6 +136,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
 <li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#installation"><i class="fa fa-check"></i><b>2.1</b> Installation</a><ul>
 <li class="chapter" data-level="2.1.1" data-path="intro.html"><a href="intro.html#dev-version-from-github"><i class="fa fa-check"></i><b>2.1.1</b> Dev version from GitHub</a></li>
+<li class="chapter" data-level="2.1.2" data-path="intro.html"><a href="intro.html#cran-version"><i class="fa fa-check"></i><b>2.1.2</b> CRAN version</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="connect.html"><a href="connect.html"><i class="fa fa-check"></i><b>3</b> Connection</a><ul>
@@ -148,23 +150,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="send.html"><a href="send.html"><i class="fa fa-check"></i><b>5</b> Sending data to the API</a><ul>
-<li class="chapter" data-level="5.0.1" data-path="send.html"><a href="send.html#reading-and-sending-a-cypher-file"><i class="fa fa-check"></i><b>5.0.1</b> Reading and sending a cypher file :</a></li>
-<li class="chapter" data-level="5.0.2" data-path="send.html"><a href="send.html#sending-csv-to-neo4j"><i class="fa fa-check"></i><b>5.0.2</b> Sending csv to Neo4J</a></li>
-<li class="chapter" data-level="5.0.3" data-path="send.html"><a href="send.html#transform-elements-to-cypher-queries"><i class="fa fa-check"></i><b>5.0.3</b> Transform elements to cypher queries</a></li>
+<li class="chapter" data-level="5.1" data-path="send.html"><a href="send.html#reading-and-sending-a-cypher-file"><i class="fa fa-check"></i><b>5.1</b> Reading and sending a cypher file :</a></li>
+<li class="chapter" data-level="5.2" data-path="send.html"><a href="send.html#sending-csv-to-neo4j"><i class="fa fa-check"></i><b>5.2</b> Sending csv to Neo4J</a></li>
+<li class="chapter" data-level="5.3" data-path="send.html"><a href="send.html#transform-elements-to-cypher-queries"><i class="fa fa-check"></i><b>5.3</b> Transform elements to cypher queries</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="convert-for-common-graph-packages.html"><a href="convert-for-common-graph-packages.html"><i class="fa fa-check"></i><b>6</b> Convert for common graph packages</a><ul>
-<li class="chapter" data-level="6.0.1" data-path="convert-for-common-graph-packages.html"><a href="convert-for-common-graph-packages.html#igraph"><i class="fa fa-check"></i><b>6.0.1</b> {igraph}</a></li>
-<li class="chapter" data-level="6.0.2" data-path="convert-for-common-graph-packages.html"><a href="convert-for-common-graph-packages.html#visnetwork"><i class="fa fa-check"></i><b>6.0.2</b> {visNetwork}</a></li>
+<li class="chapter" data-level="6.1" data-path="convert-for-common-graph-packages.html"><a href="convert-for-common-graph-packages.html#igraph"><i class="fa fa-check"></i><b>6.1</b> {igraph}</a></li>
+<li class="chapter" data-level="6.2" data-path="convert-for-common-graph-packages.html"><a href="convert-for-common-graph-packages.html#visnetwork"><i class="fa fa-check"></i><b>6.2</b> {visNetwork}</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="convert-for-common-graph-packages.html"><a href="convert-for-common-graph-packages.html#nodes"><i class="fa fa-check"></i><b>6.2.1</b> nodes</a></li>
+<li class="chapter" data-level="6.2.2" data-path="convert-for-common-graph-packages.html"><a href="convert-for-common-graph-packages.html#edges"><i class="fa fa-check"></i><b>6.2.2</b> edges</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="visualise.html"><a href="visualise.html"><i class="fa fa-check"></i><b>7</b> Visualise data</a><ul>
-<li class="chapter" data-level="7.1" data-path="visualise.html"><a href="visualise.html#with-ggraph"><i class="fa fa-check"></i><b>7.1</b> With <code>{ggraph}</code> :</a><ul>
-<li class="chapter" data-level="7.1.1" data-path="visualise.html"><a href="visualise.html#with-visnetwork"><i class="fa fa-check"></i><b>7.1.1</b> With <code>{visNetwork}</code></a></li>
+<li class="chapter" data-level="7.1" data-path="visualise.html"><a href="visualise.html#with-ggraph"><i class="fa fa-check"></i><b>7.1</b> With <code>{ggraph}</code> :</a></li>
+<li class="chapter" data-level="7.2" data-path="visualise.html"><a href="visualise.html#with-visnetwork"><i class="fa fa-check"></i><b>7.2</b> With <code>{visNetwork}</code></a></li>
 </ul></li>
+<li class="part"><span><b>I Use Cases</b></span></li>
+<li class="chapter" data-level="8" data-path="movie.html"><a href="movie.html"><i class="fa fa-check"></i><b>8</b> The Movie Dataset</a><ul>
+<li class="chapter" data-level="8.1" data-path="movie.html"><a href="movie.html#querying-data"><i class="fa fa-check"></i><b>8.1</b> Querying data</a></li>
+<li class="chapter" data-level="8.2" data-path="movie.html"><a href="movie.html#basic-data-manipulation"><i class="fa fa-check"></i><b>8.2</b> Basic data manipulation</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="appendixa.html"><a href="appendixa.html"><i class="fa fa-check"></i><b>8</b> Appendix A</a><ul>
-<li class="chapter" data-level="8.1" data-path="appendixa.html"><a href="appendixa.html#install-a-neo4j-server"><i class="fa fa-check"></i><b>8.1</b> Install a Neo4J server</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="appendixa.html"><a href="appendixa.html#on-a-linux-machine"><i class="fa fa-check"></i><b>8.1.1</b> On a Linux Machine</a></li>
-<li class="chapter" data-level="8.1.2" data-path="appendixa.html"><a href="appendixa.html#on-a-mac-machine"><i class="fa fa-check"></i><b>8.1.2</b> On a Mac Machine</a></li>
+<li class="part"><span><b>II Appendix</b></span></li>
+<li class="chapter" data-level="9" data-path="appendixa.html"><a href="appendixa.html"><i class="fa fa-check"></i><b>9</b> Appendix A</a><ul>
+<li class="chapter" data-level="9.1" data-path="appendixa.html"><a href="appendixa.html#install-a-neo4j-server"><i class="fa fa-check"></i><b>9.1</b> Install a Neo4J server</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="appendixa.html"><a href="appendixa.html#on-a-linux-machine"><i class="fa fa-check"></i><b>9.1.1</b> On a Linux Machine</a></li>
+<li class="chapter" data-level="9.1.2" data-path="appendixa.html"><a href="appendixa.html#on-a-mac-machine"><i class="fa fa-check"></i><b>9.1.2</b> On a Mac Machine</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -189,27 +199,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="send" class="section level1">
 <h1><span class="header-section-number">Chapter 5</span> Sending data to the API</h1>
-<div id="reading-and-sending-a-cypher-file" class="section level3">
-<h3><span class="header-section-number">5.0.1</span> Reading and sending a cypher file :</h3>
+<div id="reading-and-sending-a-cypher-file" class="section level2">
+<h2><span class="header-section-number">5.1</span> Reading and sending a cypher file :</h2>
 <ul>
 <li><code>read_cypher</code> reads a cypher file and returns a tibble of all the calls</li>
 </ul>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="kw">read_cypher</span>(<span class="st">&quot;data-raw/create.cypher&quot;</span>)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read_cypher</span>(<span class="st">&quot;data-raw/create.cypher&quot;</span>)</code></pre>
 <pre><code>## # A tibble: 5 x 1
-##   cypher                                                                   
-##   &lt;chr&gt;                                                                    
-## 1 CREATE CONSTRAINT ON (b:Band) ASSERT b.name IS UNIQUE;                   
-## 2 CREATE CONSTRAINT ON (c:City) ASSERT c.name IS UNIQUE;                   
-## 3 CREATE CONSTRAINT ON (r:record) ASSERT r.name IS UNIQUE;                 
-## 4 CREATE (ancient:Band {name: &#39;Ancient&#39;, formed: 1992}), (acturus:Band {na…
+##   cypher                                                                 
+##   &lt;chr&gt;                                                                  
+## 1 CREATE CONSTRAINT ON (b:Band) ASSERT b.name IS UNIQUE;                 
+## 2 CREATE CONSTRAINT ON (c:City) ASSERT c.name IS UNIQUE;                 
+## 3 CREATE CONSTRAINT ON (r:record) ASSERT r.name IS UNIQUE;               
+## 4 CREATE (ancient:Band {name: &#39;Ancient&#39;, formed: 1992}), (acturus:Band {…
 ## 5 &quot;&quot;</code></pre>
 <ul>
 <li><code>send_cypher</code> reads a cypher file, and send it the the API. By default, the stats are returned.</li>
 </ul>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="kw">send_cypher</span>(<span class="st">&quot;data-raw/constraints.cypher&quot;</span>, con)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">send_cypher</span>(<span class="st">&quot;data-raw/constraints.cypher&quot;</span>, con)</code></pre>
 </div>
-<div id="sending-csv-to-neo4j" class="section level3">
-<h3><span class="header-section-number">5.0.2</span> Sending csv to Neo4J</h3>
+<div id="sending-csv-to-neo4j" class="section level2">
+<h2><span class="header-section-number">5.2</span> Sending csv to Neo4J</h2>
 <p>The <code>load_csv</code> sends an csv from an url to the Neo4J browser.</p>
 <p>The args are :</p>
 <ul>
@@ -223,94 +233,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>include_stats</code> : whether or not to include the stats</li>
 <li><code>meta</code> : whether or not to return the meta information</li>
 </ul>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="co"># Create the constraints</span></a>
-<a class="sourceLine" id="cb42-2" title="2"><span class="kw">call_neo4j</span>(<span class="st">&quot;CREATE CONSTRAINT ON (a:artist) ASSERT a.name IS UNIQUE;&quot;</span>, con)</a>
-<a class="sourceLine" id="cb42-3" title="3"><span class="kw">call_neo4j</span>(<span class="st">&quot;CREATE CONSTRAINT ON (al:album) ASSERT al.name IS UNIQUE;&quot;</span>, con)</a></code></pre></div>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="co"># List constaints (if any)</span></a>
-<a class="sourceLine" id="cb43-2" title="2">con<span class="op">$</span><span class="kw">get_constraints</span>()</a></code></pre></div>
-<pre><code>##         label       type property_keys
-## 1:       Band UNIQUENESS          name
-## 2:     record UNIQUENESS          name
-## 3:     Author UNIQUENESS          name
-## 4:       City UNIQUENESS          name
-## 5:     artist UNIQUENESS          name
-## 6:    Package UNIQUENESS          name
-## 7: Maintainer UNIQUENESS          name</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="co"># Create the query that will create the nodes and relationships</span></a>
-<a class="sourceLine" id="cb45-2" title="2">on_load_query &lt;-<span class="st"> &#39;MERGE (a:artist { name: csvLine.artist})</span></a>
-<a class="sourceLine" id="cb45-3" title="3"><span class="st">MERGE (al:album {name: csvLine.album_name})</span></a>
-<a class="sourceLine" id="cb45-4" title="4"><span class="st">MERGE (a) -[:has_recorded] -&gt; (al)  </span></a>
-<a class="sourceLine" id="cb45-5" title="5"><span class="st">RETURN a AS artists, al AS albums;&#39;</span></a>
-<a class="sourceLine" id="cb45-6" title="6"><span class="co"># Send the csv </span></a>
-<a class="sourceLine" id="cb45-7" title="7"><span class="kw">load_csv</span>(<span class="dt">url =</span> <span class="st">&quot;https://raw.githubusercontent.com/ThinkR-open/datasets/master/tracks.csv&quot;</span>, </a>
-<a class="sourceLine" id="cb45-8" title="8">         <span class="dt">con =</span> con, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">periodic_commit =</span> <span class="dv">50</span>, </a>
-<a class="sourceLine" id="cb45-9" title="9">         <span class="dt">as =</span> <span class="st">&quot;csvLine&quot;</span>, <span class="dt">on_load =</span> on_load_query)</a></code></pre></div>
-<pre><code>## $artists
-## # A tibble: 2,367 x 1
-##    name           
-##    &lt;chr&gt;          
-##  1 Eminem         
-##  2 Eurythmics     
-##  3 Queen          
-##  4 The Police     
-##  5 A$AP Rocky     
-##  6 Tears For Fears
-##  7 Foals          
-##  8 Bag Raiders    
-##  9 Bright Eyes    
-## 10 Bob Dylan      
-## # … with 2,357 more rows
-## 
-## $albums
-## # A tibble: 2,367 x 1
-##    name                           
-##    &lt;chr&gt;                          
-##  1 Curtain Call (Deluxe)          
-##  2 Sweet Dreams (Are Made Of This)
-##  3 The Game (2011 Remaster)       
-##  4 Synchronicity (Remastered)     
-##  5 LONG.LIVE.A$AP (Deluxe Version)
-##  6 Songs From The Big Chair       
-##  7 Holy Fire                      
-##  8 Bag Raiders (Deluxe)           
-##  9 I&#39;m Wide Awake, It&#39;s Morning   
-## 10 Highway 61 Revisited           
-## # … with 2,357 more rows
-## 
-## $stats
-## # A tibble: 12 x 2
+<pre class="sourceCode r"><code class="sourceCode r">on_load_query &lt;-<span class="st"> &#39;CREATE (n:Product)</span>
+<span class="st">  SET n = row,</span>
+<span class="st">  n.unitPrice = toFloat(row.unitPrice),</span>
+<span class="st">  n.unitsInStock = toInteger(row.unitsInStock), n.unitsOnOrder = toInteger(row.unitsOnOrder),</span>
+<span class="st">  n.reorderLevel = toInteger(row.reorderLevel), n.discontinued = (row.discontinued &lt;&gt; &quot;0&quot;);&#39;</span>
+<span class="co"># Send the csv </span>
+<span class="kw">load_csv</span>(<span class="dt">url =</span> <span class="st">&quot;http://data.neo4j.com/northwind/products.csv&quot;</span>, 
+         <span class="dt">con =</span> con, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">periodic_commit =</span> <span class="dv">50</span>, 
+         <span class="dt">as =</span> <span class="st">&quot;row&quot;</span>, <span class="dt">on_load =</span> on_load_query)</code></pre>
+<pre><code>## No data returned.</code></pre>
+<pre><code>## # A tibble: 12 x 2
 ##    type                  value
 ##    &lt;chr&gt;                 &lt;dbl&gt;
-##  1 contains_updates          0
-##  2 nodes_created             0
+##  1 contains_updates          1
+##  2 nodes_created            77
 ##  3 nodes_deleted             0
-##  4 properties_set            0
+##  4 properties_set         1155
 ##  5 relationships_created     0
 ##  6 relationship_deleted      0
-##  7 labels_added              0
+##  7 labels_added             77
 ##  8 labels_removed            0
 ##  9 indexes_added             0
 ## 10 indexes_removed           0
 ## 11 constraints_added         0
-## 12 constraints_removed       0
-## 
-## attr(,&quot;class&quot;)
-## [1] &quot;neo&quot;  &quot;list&quot;</code></pre>
+## 12 constraints_removed       0</code></pre>
 </div>
-<div id="transform-elements-to-cypher-queries" class="section level3">
-<h3><span class="header-section-number">5.0.3</span> Transform elements to cypher queries</h3>
+<div id="transform-elements-to-cypher-queries" class="section level2">
+<h2><span class="header-section-number">5.3</span> Transform elements to cypher queries</h2>
 <ul>
 <li><code>vec_to_cypher()</code> creates a list :</li>
 </ul>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw">vec_to_cypher</span>(iris[<span class="dv">1</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="st">&quot;Species&quot;</span>)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">vec_to_cypher</span>(iris[<span class="dv">1</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="st">&quot;Species&quot;</span>)</code></pre>
 <pre><code>## [1] &quot;(:`Species` {`Sepal.Length`: &#39;5.1&#39;, `Sepal.Width`: &#39;3.5&#39;, `Petal.Length`: &#39;1.4&#39;})&quot;</code></pre>
 <ul>
 <li>and <code>vec_to_cypher_with_var()</code> creates a cypher call starting with a variable :</li>
 </ul>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1"><span class="kw">vec_to_cypher_with_var</span>(iris[<span class="dv">1</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="st">&quot;Species&quot;</span>, a)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">vec_to_cypher_with_var</span>(iris[<span class="dv">1</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="st">&quot;Species&quot;</span>, a)</code></pre>
 <pre><code>## [1] &quot;(a:`Species` {`Sepal.Length`: &#39;5.1&#39;, `Sepal.Width`: &#39;3.5&#39;, `Petal.Length`: &#39;1.4&#39;})&quot;</code></pre>
 <p>This can be combined inside a cypher call:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1"><span class="kw">paste</span>(<span class="st">&quot;MERGE&quot;</span>, <span class="kw">vec_to_cypher</span>(iris[<span class="dv">1</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="st">&quot;Species&quot;</span>))</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">paste</span>(<span class="st">&quot;MERGE&quot;</span>, <span class="kw">vec_to_cypher</span>(iris[<span class="dv">1</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="st">&quot;Species&quot;</span>))</code></pre>
 <pre><code>## [1] &quot;MERGE (:`Species` {`Sepal.Length`: &#39;5.1&#39;, `Sepal.Width`: &#39;3.5&#39;, `Petal.Length`: &#39;1.4&#39;})&quot;</code></pre>
 
 </div>
@@ -341,7 +303,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -351,6 +313,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
 "link": null,
 "text": null
 },

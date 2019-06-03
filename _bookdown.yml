@@ -12,5 +12,6 @@ rmd_files: [
   "send_data.Rmd",
   "convert.Rmd",
   "visualise.Rmd",
+  "use-case-one-movie.Rmd",
   "appendix-A.Rmd"
 ]

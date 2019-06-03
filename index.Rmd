@@ -10,6 +10,18 @@ link-citations: yes
 description: "A Guide About Using Neo4J and R"
 ---
 
+```{r include = FALSE}
+system("docker run --name neo4j --env NEO4J_AUTH=neo4j/password --publish=7474:7474 --publish=7687:7687 -d neo4j")
+library(neo4r)
+con <- neo4j_api$new(
+  url = "http://localhost:7474", 
+  user = "neo4j", 
+  password = "password"
+)
+while (try(con$ping()) != 200){
+  Sys.sleep(3)
+}
+```
 # About 
 
 This book is a user companion for using Neo4J and R together with the `{neo4r}` package.
@@ -31,13 +43,12 @@ library(neo4r)
 con <- neo4j_api$new(
   url = "http://localhost:7474",
   user = "neo4j", 
-  password = "neo4j"
+  password = "password"
   )
-read_cypher("data-raw/create.cypher")
-send_cypher("data-raw/create.cypher", con)
+play_movies() %>%
+  call_neo4j(con)
 ```
 
-See the cypher query at https://github.com/neo4j-rstats/user-guide/blob/master/data-raw/create.cypher
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages

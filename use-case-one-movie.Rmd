@@ -1,0 +1,75 @@
+# (PART) Use Cases {-}
+
+# The Movie Dataset {#movie}
+
+Neo4J comes with an example dataset called `movies`, which you can use with:
+
+```{r eval = FALSE}
+play_movies() %>%
+  call_neo4j(con)
+```
+
+## Querying data
+
++ Returning data as data.frames:
+
+```{r}
+'MATCH (tom {name: "Tom Hanks"}) RETURN tom' %>%
+  call_neo4j(con)
+
+'MATCH (cloudAtlas {title: "Cloud Atlas"}) RETURN cloudAtlas' %>%
+  call_neo4j(con)
+
+'MATCH (people:Person) RETURN people.name LIMIT 10' %>%
+  call_neo4j(con)
+
+'MATCH (nineties:Movie) WHERE nineties.released >= 1990 AND nineties.released < 2000 RETURN nineties.title' %>%
+  call_neo4j(con)
+
+'MATCH (bacon:Person {name:"Kevin Bacon"})-[*1..4]-(hollywood) RETURN DISTINCT hollywood' %>%
+  call_neo4j(con)
+```
+
++ Returning data as graphs:
+
+```{r}
+'MATCH (tom:Person {name: "Tom Hanks"})-[:ACTED_IN]->(tomHanksMovies) RETURN tom,tomHanksMovies' %>%
+  call_neo4j(con, type = "graph")
+
+'MATCH (cloudAtlas {title: "Cloud Atlas"})<-[:DIRECTED]-(directors) RETURN directors' %>%
+  call_neo4j(con, type = "graph") %>%
+  extract_nodes()
+
+'MATCH (tom:Person {name:"Tom Hanks"})-[:ACTED_IN]->(m)<-[:ACTED_IN]-(coActors) RETURN coActors' %>%
+  call_neo4j(con, type = "graph") %>%
+  unnest_graph()
+```
+
+## Basic data manipulation
+
+
+```{r}
+library(tidyverse)
+res <- 'MATCH (per)-[act:ACTED_IN]->(mov) RETURN per, mov' %>% 
+  call_neo4j(con)  
+df <- bind_cols(
+   purrr::pluck(res, "per"),
+   purrr::pluck(res, "mov")
+)
+df  %>%
+  count(name, sort = TRUE) %>%
+  top_n(10)
+
+df %>%
+  distinct(title, released) %>%
+  count(released) %>%
+  ggplot(aes(released, n)) +
+  geom_col(fill = viridis::viridis(1))  +
+  labs(
+    title = "Movies by year in the 'movies' dataset"
+  ) +
+  theme_minimal()
+```
+
+
+

@@ -1,6 +1,6 @@
 # Sending data to the API {#send}
 
-### Reading and sending a cypher file :
+## Reading and sending a cypher file :
 
 + `read_cypher` reads a cypher file and returns a tibble of all the calls
 
@@ -15,7 +15,7 @@ send_cypher("data-raw/constraints.cypher", con)
 ```
 
 
-### Sending csv to Neo4J
+## Sending csv to Neo4J
 
 The `load_csv` sends an csv from an url to the Neo4J browser. 
 
@@ -31,27 +31,19 @@ The args are :
 + `include_stats` : whether or not to include the stats 
 + `meta` : whether or not to return the meta information
 
-```{r eval = FALSE}
-# Create the constraints
-call_neo4j("CREATE CONSTRAINT ON (a:artist) ASSERT a.name IS UNIQUE;", con)
-call_neo4j("CREATE CONSTRAINT ON (al:album) ASSERT al.name IS UNIQUE;", con)
-```
-
 ```{r}
-# List constaints (if any)
-con$get_constraints()
-# Create the query that will create the nodes and relationships
-on_load_query <- 'MERGE (a:artist { name: csvLine.artist})
-MERGE (al:album {name: csvLine.album_name})
-MERGE (a) -[:has_recorded] -> (al)  
-RETURN a AS artists, al AS albums;'
+on_load_query <- 'CREATE (n:Product)
+  SET n = row,
+  n.unitPrice = toFloat(row.unitPrice),
+  n.unitsInStock = toInteger(row.unitsInStock), n.unitsOnOrder = toInteger(row.unitsOnOrder),
+  n.reorderLevel = toInteger(row.reorderLevel), n.discontinued = (row.discontinued <> "0");'
 # Send the csv 
-load_csv(url = "https://raw.githubusercontent.com/ThinkR-open/datasets/master/tracks.csv", 
+load_csv(url = "http://data.neo4j.com/northwind/products.csv", 
          con = con, header = TRUE, periodic_commit = 50, 
-         as = "csvLine", on_load = on_load_query)
+         as = "row", on_load = on_load_query)
 ```
 
-### Transform elements to cypher queries
+## Transform elements to cypher queries
 
 + `vec_to_cypher()` creates a list : 
 

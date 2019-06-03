@@ -1,6 +1,6 @@
 # Convert for common graph packages
 
-### {igraph}
+## {igraph}
 
 In order to be converted into a graph object:
 
@@ -56,18 +56,18 @@ graph_object %>%
   theme_graph()
 ```
 
-### {visNetwork}
+## {visNetwork}
 
 `{visNetwork}` expects the following format : 
 
-#### nodes	
+### nodes	
 - "id" : id of the node, needed in edges information
 - "label" : label of the node
 - "group" : group of the node. Groups can be configure with visGroups
 - "value" : size of the node
 - "title" : tooltip of the node
 
-#### edges	
+### edges	
 - "from" : node id of begin of the edge
 - "to" : node id of end of the edge
 - "label" : label of the edge

@@ -1,3 +1,5 @@
+# (PART) Appendix {-}
+
 # Appendix A {#appendixa}
 
 ## Install a Neo4J server 
@@ -6,4 +8,8 @@
 
 
 ### On a Mac Machine
+
+```{r include = FALSE}
+system("docker stop neo4j && sleep 2 && docker rm neo4j")
+```
 

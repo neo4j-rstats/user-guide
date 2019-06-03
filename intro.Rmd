@@ -9,3 +9,9 @@
 remotes::install_github("neo4j-rstats/neo4r")
 ```
 
+### CRAN version
+
+```{r eval = FALSE}
+install.packages("neo4r")
+```
+

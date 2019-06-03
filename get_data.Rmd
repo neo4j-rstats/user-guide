@@ -18,7 +18,7 @@ The user chooses wether or not to return a list of tibbles when calling the API.
 ```{r}
 library(magrittr)
 
-'MATCH (r:record) -[:WAS_RECORDED] -> (b:Band) where b.formed = 1991 RETURN *;' %>%
+'MATCH (tom {name: "Tom Hanks"}) RETURN tom;' %>%
   call_neo4j(con)
 ```
 
@@ -29,14 +29,25 @@ For example, when you want to return two nodes types, you'll get two results, in
 Results can also be returned in JSON:
 
 ```{r}
-'MATCH (r:record) -[:WAS_RECORDED] -> (b:Band) where b.formed = 1991 RETURN *;' %>%
+'MATCH (cloudAtlas {title: "Cloud Atlas"}) RETURN cloudAtlas;' %>%
   call_neo4j(con, output = "json")
 ```
+
+Useful for example for writing to a file:
+
+```{r}
+tmp <- tempfile(fileext = ".json")
+'MATCH (people:Person) RETURN people.name LIMIT 1' %>%
+  call_neo4j(con, output = "json") %>%
+  write(tmp)
+jsonlite::read_json(tmp)
+```
+
 
 If you turn the `type` argument to `"graph"`, you'll get a graph result: 
 
 ```{r}
-'MATCH p=()-[r:WAS_RECORDED]->() RETURN p LIMIT 5' %>%
+'MATCH (tom:Person {name: "Tom Hanks"})-[act:ACTED_IN]->(tomHanksMovies) RETURN act,tom,tomHanksMovies' %>%
   call_neo4j(con, type = "graph")
 ```
 
@@ -51,7 +62,7 @@ We have designed several functions to unnest the output :
 + `unnest_nodes()`, that can unnest a node dataframe : 
 
 ```{r}
-res <- 'MATCH p=()-[r:WAS_RECORDED]->() RETURN p LIMIT 5;' %>%
+res <- 'MATCH (tom:Person {name:"Tom Hanks"})-[a:ACTED_IN]->(m)<-[:ACTED_IN]-(coActors) RETURN m AS acted,coActors.name' %>%
   call_neo4j(con, type = "graph")
 unnest_nodes(res$nodes)
 ```
@@ -63,12 +74,14 @@ On the long run, and this is not {neo4r} specific but Neo4J related, a good prac
 Also, it is possible to unnest either the properties or the labels : 
 
 ```{r}
-res$nodes %>%
+res %>%
+  extract_nodes() %>%
   unnest_nodes(what = "properties")
 ```
 
 ```{r}
-res$nodes %>%
+res %>%
+  extract_nodes() %>%
   unnest_nodes(what = "label")
 ```
 
@@ -77,7 +90,10 @@ res$nodes %>%
 There is only one nested column in the relationship table, thus the function is quite straightforward : 
 
 ```{r}
-unnest_relationships(res$relationships)
+'MATCH (people:Person)-[relatedTo]-(:Movie {title: "Cloud Atlas"}) RETURN people.name, Type(relatedTo), relatedTo' %>%
+  call_neo4j(con, type = "graph") %>%
+  extract_relationships() %>%
+  unnest_relationships()
 ```
 
 + `unnest_graph()`
@@ -85,7 +101,9 @@ unnest_relationships(res$relationships)
 This function takes a graph results, and does `unnest_nodes` and `unnest_relationships`. 
 
 ```{r}
-unnest_graph(res)
+'MATCH (people:Person)-[relatedTo]-(:Movie {title: "Cloud Atlas"}) RETURN people.name, Type(relatedTo), relatedTo' %>%
+  call_neo4j(con, type = "graph") %>%
+  unnest_graph()
 ```
 
 ### Extraction 
@@ -93,8 +111,17 @@ unnest_graph(res)
 There are two convenient functions to extract nodes and relationships: 
 
 ```{r}
-'MATCH p=()-[r:WAS_RECORDED]->() RETURN p LIMIT 5;' %>%
+'MATCH (bacon:Person {name:"Kevin Bacon"})-[*1..4]-(hollywood) RETURN DISTINCT hollywood' %>%
   call_neo4j(con, type = "graph") %>% 
   extract_nodes()
+```
+
+```{r}
+'MATCH p=shortestPath(
+  (bacon:Person {name:"Kevin Bacon"})-[*]-(meg:Person {name:"Meg Ryan"})
+)
+RETURN p' %>%
+  call_neo4j(con, type = "graph") %>% 
+  extract_relationships()
 ```
 

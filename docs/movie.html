@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Using R &amp; Neo4J</title>
+  <title>Chapter 8 The Movie Dataset | Using R &amp; Neo4J</title>
   <meta name="description" content="A Guide About Using Neo4J and R">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Using R &amp; Neo4J" />
+  <meta property="og:title" content="Chapter 8 The Movie Dataset | Using R &amp; Neo4J" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Using R &amp; Neo4J" />
+  <meta name="twitter:title" content="Chapter 8 The Movie Dataset | Using R &amp; Neo4J" />
   
   <meta name="twitter:description" content="A Guide About Using Neo4J and R" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="intro.html">
+<link rel="prev" href="visualise.html">
+<link rel="next" href="appendixa.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -197,86 +197,223 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Using R &amp; Neo4J</h1>
-<p class="author"><em>Colin Fay</em></p>
-<p class="date"><em>2019-06-03</em></p>
-</div>
-<div id="about" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> About</h1>
-<p>This book is a user companion for using Neo4J and R together with the <code>{neo4r}</code> package.</p>
-<div id="neo4r" class="section level2">
-<h2><span class="header-section-number">1.1</span> <code>{neo4r}</code></h2>
-<p>The goal of <code>{neo4r}</code> is to provide a modern and flexible Neo4J driver for R.</p>
-<p>It’s modern in the sense that the results are returned as tibbles whenever possible, it relies on modern tools, and it is designed to work with pipes. Our goal is to provide a driver that can be easily integrated in a data analysis workflow, especially by providing an API working smoothly with other data analysis (<code>{dplyr}</code> or <code>{purrr}</code>) and graph packages (<code>{igraph}</code>, <code>{ggraph}</code>, <code>{visNetwork}</code>…).</p>
-<p>It’s flexible in the sense that it is rather unopinionated regarding the way it returns the results, by trying to stay as close as possible to the way Neo4J returns data. That way, you have the control over the way you will compute the results. At the same time, the result is not too complex, so that the “heavy lifting” of data wrangling is not left to the user.</p>
-<p>The connexion object is also an easy to control R6 method, allowing you to update and query information from the API.</p>
-<p>Sending data for this book (the movies dataset is also loaded on the server):</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(neo4r)
-con &lt;-<span class="st"> </span>neo4j_api<span class="op">$</span><span class="kw">new</span>(
-  <span class="dt">url =</span> <span class="st">&quot;http://localhost:7474&quot;</span>,
-  <span class="dt">user =</span> <span class="st">&quot;neo4j&quot;</span>, 
-  <span class="dt">password =</span> <span class="st">&quot;password&quot;</span>
-  )
-<span class="kw">play_movies</span>() <span class="op">%&gt;%</span>
+<div id="movie" class="section level1">
+<h1><span class="header-section-number">Chapter 8</span> The Movie Dataset</h1>
+<p>Neo4J comes with an example dataset called <code>movies</code>, which you can use with:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">play_movies</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">call_neo4j</span>(con)</code></pre>
-<pre><code>## $a
-## # A tibble: 10 x 2
-##     born name     
-##    &lt;int&gt; &lt;chr&gt;    
-##  1  1956 Tom Hanks
-##  2  1956 Tom Hanks
-##  3  1956 Tom Hanks
-##  4  1956 Tom Hanks
-##  5  1956 Tom Hanks
-##  6  1956 Tom Hanks
-##  7  1956 Tom Hanks
-##  8  1956 Tom Hanks
-##  9  1956 Tom Hanks
-## 10  1956 Tom Hanks
-## 
-## $m
-## # A tibble: 10 x 3
-##    tagline                                       title           released
-##    &lt;chr&gt;                                         &lt;chr&gt;              &lt;int&gt;
-##  1 In every life there comes a time when that t… That Thing You…     1996
-##  2 Once in a lifetime you get a chance to do so… A League of Th…     1992
-##  3 What if someone you never met, someone you n… Sleepless in S…     1993
-##  4 A stiff drink. A little mascara. A lot of ne… Charlie Wilson…     2007
-##  5 At the edge of the world, his journey begins. Cast Away           2000
-##  6 Walk a mile youll never forget.               The Green Mile      1999
-##  7 Break The Codes                               The Da Vinci C…     2006
-##  8 This Holiday Season… Believe                  The Polar Expr…     2004
-##  9 A story of love, lava and burning desire.     Joe Versus the…     1990
-## 10 Everything is connected                       Cloud Atlas         2012
-## 
-## $d
-## # A tibble: 10 x 2
-##     born name                
-##    &lt;int&gt; &lt;chr&gt;               
-##  1  1956 Tom Hanks           
-##  2  1943 Penny Marshall      
-##  3  1941 Nora Ephron         
-##  4  1931 Mike Nichols        
-##  5  1951 Robert Zemeckis     
-##  6  1959 Frank Darabont      
-##  7  1954 Ron Howard          
-##  8  1951 Robert Zemeckis     
-##  9  1950 John Patrick Stanley
-## 10  1965 Tom Tykwer          
+<div id="querying-data" class="section level2">
+<h2><span class="header-section-number">8.1</span> Querying data</h2>
+<ul>
+<li>Returning data as data.frames:</li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="st">&#39;MATCH (tom {name: &quot;Tom Hanks&quot;}) RETURN tom&#39;</span> <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">call_neo4j</span>(con)</code></pre>
+<pre><code>## $tom
+## # A tibble: 1 x 2
+##    born name     
+##   &lt;int&gt; &lt;chr&gt;    
+## 1  1956 Tom Hanks
 ## 
 ## attr(,&quot;class&quot;)
 ## [1] &quot;neo&quot;  &quot;list&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="st">&#39;MATCH (cloudAtlas {title: &quot;Cloud Atlas&quot;}) RETURN cloudAtlas&#39;</span> <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">call_neo4j</span>(con)</code></pre>
+<pre><code>## $cloudAtlas
+## # A tibble: 1 x 3
+##   tagline                 title       released
+##   &lt;chr&gt;                   &lt;chr&gt;          &lt;int&gt;
+## 1 Everything is connected Cloud Atlas     2012
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;neo&quot;  &quot;list&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="st">&#39;MATCH (people:Person) RETURN people.name LIMIT 10&#39;</span> <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">call_neo4j</span>(con)</code></pre>
+<pre><code>## $people.name
+## # A tibble: 10 x 1
+##    value             
+##    &lt;chr&gt;             
+##  1 Keanu Reeves      
+##  2 Carrie-Anne Moss  
+##  3 Laurence Fishburne
+##  4 Hugo Weaving      
+##  5 Lilly Wachowski   
+##  6 Lana Wachowski    
+##  7 Joel Silver       
+##  8 Emil Eifrem       
+##  9 Charlize Theron   
+## 10 Al Pacino         
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;neo&quot;  &quot;list&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="st">&#39;MATCH (nineties:Movie) WHERE nineties.released &gt;= 1990 AND nineties.released &lt; 2000 RETURN nineties.title&#39;</span> <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">call_neo4j</span>(con)</code></pre>
+<pre><code>## $nineties.title
+## # A tibble: 20 x 1
+##    value                 
+##    &lt;chr&gt;                 
+##  1 The Matrix            
+##  2 The Devils Advocate   
+##  3 A Few Good Men        
+##  4 As Good as It Gets    
+##  5 What Dreams May Come  
+##  6 Snow Falling on Cedars
+##  7 Youve Got Mail        
+##  8 Sleepless in Seattle  
+##  9 Joe Versus the Volcano
+## 10 When Harry Met Sally  
+## 11 That Thing You Do     
+## 12 The Birdcage          
+## 13 Unforgiven            
+## 14 Johnny Mnemonic       
+## 15 The Green Mile        
+## 16 Hoffa                 
+## 17 Apollo 13             
+## 18 Twister               
+## 19 Bicentennial Man      
+## 20 A League of Their Own 
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;neo&quot;  &quot;list&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="st">&#39;MATCH (bacon:Person {name:&quot;Kevin Bacon&quot;})-[*1..4]-(hollywood) RETURN DISTINCT hollywood&#39;</span> <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">call_neo4j</span>(con)</code></pre>
+<pre><code>## $hollywood
+## # A tibble: 135 x 5
+##     born name          tagline                      title        released
+##    &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;                        &lt;chr&gt;           &lt;int&gt;
+##  1  1941 Nora Ephron   &lt;NA&gt;                         &lt;NA&gt;               NA
+##  2  1968 Parker Posey  &lt;NA&gt;                         &lt;NA&gt;               NA
+##  3  1963 Greg Kinnear  &lt;NA&gt;                         &lt;NA&gt;               NA
+##  4  1961 Meg Ryan      &lt;NA&gt;                         &lt;NA&gt;               NA
+##  5  1967 Steve Zahn    &lt;NA&gt;                         &lt;NA&gt;               NA
+##  6  1973 Dave Chappel… &lt;NA&gt;                         &lt;NA&gt;               NA
+##  7    NA &lt;NA&gt;          At odds in life... in love … Youve Got M…     1998
+##  8  1954 Madonna       &lt;NA&gt;                         &lt;NA&gt;               NA
+##  9  1943 Penny Marsha… &lt;NA&gt;                         &lt;NA&gt;               NA
+## 10  1962 Rosie ODonne… &lt;NA&gt;                         &lt;NA&gt;               NA
+## # … with 125 more rows
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;neo&quot;  &quot;list&quot;</code></pre>
+<ul>
+<li>Returning data as graphs:</li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="st">&#39;MATCH (tom:Person {name: &quot;Tom Hanks&quot;})-[:ACTED_IN]-&gt;(tomHanksMovies) RETURN tom,tomHanksMovies&#39;</span> <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">call_neo4j</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>)</code></pre>
+<pre><code>## $nodes
+## # A tibble: 13 x 3
+##    id    label     properties
+##    &lt;chr&gt; &lt;list&gt;    &lt;list&gt;    
+##  1 144   &lt;chr [1]&gt; &lt;list [3]&gt;
+##  2 71    &lt;chr [1]&gt; &lt;list [2]&gt;
+##  3 67    &lt;chr [1]&gt; &lt;list [3]&gt;
+##  4 162   &lt;chr [1]&gt; &lt;list [3]&gt;
+##  5 78    &lt;chr [1]&gt; &lt;list [3]&gt;
+##  6 85    &lt;chr [1]&gt; &lt;list [3]&gt;
+##  7 111   &lt;chr [1]&gt; &lt;list [3]&gt;
+##  8 105   &lt;chr [1]&gt; &lt;list [3]&gt;
+##  9 150   &lt;chr [1]&gt; &lt;list [3]&gt;
+## 10 130   &lt;chr [1]&gt; &lt;list [3]&gt;
+## 11 73    &lt;chr [1]&gt; &lt;list [3]&gt;
+## 12 161   &lt;chr [1]&gt; &lt;list [3]&gt;
+## 13 159   &lt;chr [1]&gt; &lt;list [3]&gt;
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;neo&quot;  &quot;list&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="st">&#39;MATCH (cloudAtlas {title: &quot;Cloud Atlas&quot;})&lt;-[:DIRECTED]-(directors) RETURN directors&#39;</span> <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">call_neo4j</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">extract_nodes</span>()</code></pre>
+<pre><code>## # A tibble: 3 x 3
+##   id    label     properties
+##   &lt;chr&gt; &lt;list&gt;    &lt;list&gt;    
+## 1 108   &lt;chr [1]&gt; &lt;list [2]&gt;
+## 2 6     &lt;chr [1]&gt; &lt;list [2]&gt;
+## 3 5     &lt;chr [1]&gt; &lt;list [2]&gt;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="st">&#39;MATCH (tom:Person {name:&quot;Tom Hanks&quot;})-[:ACTED_IN]-&gt;(m)&lt;-[:ACTED_IN]-(coActors) RETURN coActors&#39;</span> <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">call_neo4j</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">unnest_graph</span>()</code></pre>
+<pre><code>## $nodes
+## # A tibble: 34 x 4
+##    id    value   born name          
+##    &lt;chr&gt; &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;         
+##  1 145   Person  1950 Ed Harris     
+##  2 134   Person  1955 Gary Sinise   
+##  3 19    Person  1958 Kevin Bacon   
+##  4 146   Person  1955 Bill Paxton   
+##  5 68    Person  1968 Parker Posey  
+##  6 54    Person  1963 Greg Kinnear  
+##  7 34    Person  1961 Meg Ryan      
+##  8 70    Person  1967 Steve Zahn    
+##  9 69    Person  1973 Dave Chappelle
+## 10 163   Person  1954 Madonna       
+## # … with 24 more rows
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;neo&quot;  &quot;list&quot;</code></pre>
+</div>
+<div id="basic-data-manipulation" class="section level2">
+<h2><span class="header-section-number">8.2</span> Basic data manipulation</h2>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ──────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ tibble  2.1.1     ✔ readr   1.3.1
+## ✔ tidyr   0.8.3     ✔ stringr 1.4.0
+## ✔ tibble  2.1.1     ✔ forcats 0.3.0</code></pre>
+<pre><code>## ── Conflicts ─────────────────────────────────── tidyverse_conflicts() ──
+## ✖ tidyr::extract()   masks magrittr::extract()
+## ✖ dplyr::filter()    masks stats::filter()
+## ✖ dplyr::lag()       masks stats::lag()
+## ✖ purrr::set_names() masks magrittr::set_names()</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> &#39;MATCH (per)-[act:ACTED_IN]-&gt;(mov) RETURN per, mov&#39;</span> <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">call_neo4j</span>(con)  
+df &lt;-<span class="st"> </span><span class="kw">bind_cols</span>(
+   purrr<span class="op">::</span><span class="kw">pluck</span>(res, <span class="st">&quot;per&quot;</span>),
+   purrr<span class="op">::</span><span class="kw">pluck</span>(res, <span class="st">&quot;mov&quot;</span>)
+)
+df  <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">count</span>(name, <span class="dt">sort =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">top_n</span>(<span class="dv">10</span>)</code></pre>
+<pre><code>## Selecting by n</code></pre>
+<pre><code>## # A tibble: 15 x 2
+##    name                   n
+##    &lt;chr&gt;              &lt;int&gt;
+##  1 Tom Hanks             12
+##  2 Keanu Reeves           7
+##  3 Hugo Weaving           5
+##  4 Jack Nicholson         5
+##  5 Meg Ryan               5
+##  6 Cuba Gooding Jr.       4
+##  7 Ben Miles              3
+##  8 Bill Paxton            3
+##  9 Carrie-Anne Moss       3
+## 10 Gene Hackman           3
+## 11 Helen Hunt             3
+## 12 Kevin Bacon            3
+## 13 Laurence Fishburne     3
+## 14 Robin Williams         3
+## 15 Tom Cruise             3</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">distinct</span>(title, released) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">count</span>(released) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(released, n)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">fill =</span> viridis<span class="op">::</span><span class="kw">viridis</span>(<span class="dv">1</span>))  <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(
+    <span class="dt">title =</span> <span class="st">&quot;Movies by year in the &#39;movies&#39; dataset&quot;</span>
+  ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_minimal</span>()</code></pre>
+<p><img src="neo4j-r-book_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
 
 </div>
 </div>
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="visualise.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendixa.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -24,7 +24,7 @@ graph_object %>%
   theme_graph()
 ```
 
-### With `{visNetwork}`
+## With `{visNetwork}`
 
 ```{r eval = FALSE}
 G <-"MATCH a=(p:Person {name: 'Tom Hanks'})-[r:ACTED_IN]->(m:Movie) RETURN a;" %>% 

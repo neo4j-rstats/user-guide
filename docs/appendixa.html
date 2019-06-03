@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Using R &amp; Neo4J</title>
+  <title>Chapter 9 Appendix A | Using R &amp; Neo4J</title>
   <meta name="description" content="A Guide About Using Neo4J and R">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Using R &amp; Neo4J" />
+  <meta property="og:title" content="Chapter 9 Appendix A | Using R &amp; Neo4J" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Using R &amp; Neo4J" />
+  <meta name="twitter:title" content="Chapter 9 Appendix A | Using R &amp; Neo4J" />
   
   <meta name="twitter:description" content="A Guide About Using Neo4J and R" />
   
@@ -25,17 +25,18 @@
 <meta name="author" content="Colin Fay">
 
 
-<meta name="date" content="2019-02-15">
+<meta name="date" content="2019-06-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="visualise.html">
+<link rel="prev" href="movie.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -135,6 +136,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
 <li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#installation"><i class="fa fa-check"></i><b>2.1</b> Installation</a><ul>
 <li class="chapter" data-level="2.1.1" data-path="intro.html"><a href="intro.html#dev-version-from-github"><i class="fa fa-check"></i><b>2.1.1</b> Dev version from GitHub</a></li>
+<li class="chapter" data-level="2.1.2" data-path="intro.html"><a href="intro.html#cran-version"><i class="fa fa-check"></i><b>2.1.2</b> CRAN version</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="connect.html"><a href="connect.html"><i class="fa fa-check"></i><b>3</b> Connection</a><ul>
@@ -148,23 +150,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="send.html"><a href="send.html"><i class="fa fa-check"></i><b>5</b> Sending data to the API</a><ul>
-<li class="chapter" data-level="5.0.1" data-path="send.html"><a href="send.html#reading-and-sending-a-cypher-file"><i class="fa fa-check"></i><b>5.0.1</b> Reading and sending a cypher file :</a></li>
-<li class="chapter" data-level="5.0.2" data-path="send.html"><a href="send.html#sending-csv-to-neo4j"><i class="fa fa-check"></i><b>5.0.2</b> Sending csv to Neo4J</a></li>
-<li class="chapter" data-level="5.0.3" data-path="send.html"><a href="send.html#transform-elements-to-cypher-queries"><i class="fa fa-check"></i><b>5.0.3</b> Transform elements to cypher queries</a></li>
+<li class="chapter" data-level="5.1" data-path="send.html"><a href="send.html#reading-and-sending-a-cypher-file"><i class="fa fa-check"></i><b>5.1</b> Reading and sending a cypher file :</a></li>
+<li class="chapter" data-level="5.2" data-path="send.html"><a href="send.html#sending-csv-to-neo4j"><i class="fa fa-check"></i><b>5.2</b> Sending csv to Neo4J</a></li>
+<li class="chapter" data-level="5.3" data-path="send.html"><a href="send.html#transform-elements-to-cypher-queries"><i class="fa fa-check"></i><b>5.3</b> Transform elements to cypher queries</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="convert-for-common-graph-packages.html"><a href="convert-for-common-graph-packages.html"><i class="fa fa-check"></i><b>6</b> Convert for common graph packages</a><ul>
-<li class="chapter" data-level="6.0.1" data-path="convert-for-common-graph-packages.html"><a href="convert-for-common-graph-packages.html#igraph"><i class="fa fa-check"></i><b>6.0.1</b> {igraph}</a></li>
-<li class="chapter" data-level="6.0.2" data-path="convert-for-common-graph-packages.html"><a href="convert-for-common-graph-packages.html#visnetwork"><i class="fa fa-check"></i><b>6.0.2</b> {visNetwork}</a></li>
+<li class="chapter" data-level="6.1" data-path="convert-for-common-graph-packages.html"><a href="convert-for-common-graph-packages.html#igraph"><i class="fa fa-check"></i><b>6.1</b> {igraph}</a></li>
+<li class="chapter" data-level="6.2" data-path="convert-for-common-graph-packages.html"><a href="convert-for-common-graph-packages.html#visnetwork"><i class="fa fa-check"></i><b>6.2</b> {visNetwork}</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="convert-for-common-graph-packages.html"><a href="convert-for-common-graph-packages.html#nodes"><i class="fa fa-check"></i><b>6.2.1</b> nodes</a></li>
+<li class="chapter" data-level="6.2.2" data-path="convert-for-common-graph-packages.html"><a href="convert-for-common-graph-packages.html#edges"><i class="fa fa-check"></i><b>6.2.2</b> edges</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="visualise.html"><a href="visualise.html"><i class="fa fa-check"></i><b>7</b> Visualise data</a><ul>
-<li class="chapter" data-level="7.1" data-path="visualise.html"><a href="visualise.html#with-ggraph"><i class="fa fa-check"></i><b>7.1</b> With <code>{ggraph}</code> :</a><ul>
-<li class="chapter" data-level="7.1.1" data-path="visualise.html"><a href="visualise.html#with-visnetwork"><i class="fa fa-check"></i><b>7.1.1</b> With <code>{visNetwork}</code></a></li>
+<li class="chapter" data-level="7.1" data-path="visualise.html"><a href="visualise.html#with-ggraph"><i class="fa fa-check"></i><b>7.1</b> With <code>{ggraph}</code> :</a></li>
+<li class="chapter" data-level="7.2" data-path="visualise.html"><a href="visualise.html#with-visnetwork"><i class="fa fa-check"></i><b>7.2</b> With <code>{visNetwork}</code></a></li>
 </ul></li>
+<li class="part"><span><b>I Use Cases</b></span></li>
+<li class="chapter" data-level="8" data-path="movie.html"><a href="movie.html"><i class="fa fa-check"></i><b>8</b> The Movie Dataset</a><ul>
+<li class="chapter" data-level="8.1" data-path="movie.html"><a href="movie.html#querying-data"><i class="fa fa-check"></i><b>8.1</b> Querying data</a></li>
+<li class="chapter" data-level="8.2" data-path="movie.html"><a href="movie.html#basic-data-manipulation"><i class="fa fa-check"></i><b>8.2</b> Basic data manipulation</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="appendixa.html"><a href="appendixa.html"><i class="fa fa-check"></i><b>8</b> Appendix A</a><ul>
-<li class="chapter" data-level="8.1" data-path="appendixa.html"><a href="appendixa.html#install-a-neo4j-server"><i class="fa fa-check"></i><b>8.1</b> Install a Neo4J server</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="appendixa.html"><a href="appendixa.html#on-a-linux-machine"><i class="fa fa-check"></i><b>8.1.1</b> On a Linux Machine</a></li>
-<li class="chapter" data-level="8.1.2" data-path="appendixa.html"><a href="appendixa.html#on-a-mac-machine"><i class="fa fa-check"></i><b>8.1.2</b> On a Mac Machine</a></li>
+<li class="part"><span><b>II Appendix</b></span></li>
+<li class="chapter" data-level="9" data-path="appendixa.html"><a href="appendixa.html"><i class="fa fa-check"></i><b>9</b> Appendix A</a><ul>
+<li class="chapter" data-level="9.1" data-path="appendixa.html"><a href="appendixa.html#install-a-neo4j-server"><i class="fa fa-check"></i><b>9.1</b> Install a Neo4J server</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="appendixa.html"><a href="appendixa.html#on-a-linux-machine"><i class="fa fa-check"></i><b>9.1.1</b> On a Linux Machine</a></li>
+<li class="chapter" data-level="9.1.2" data-path="appendixa.html"><a href="appendixa.html#on-a-mac-machine"><i class="fa fa-check"></i><b>9.1.2</b> On a Mac Machine</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -188,14 +198,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="appendixa" class="section level1">
-<h1><span class="header-section-number">Chapter 8</span> Appendix A</h1>
+<h1><span class="header-section-number">Chapter 9</span> Appendix A</h1>
 <div id="install-a-neo4j-server" class="section level2">
-<h2><span class="header-section-number">8.1</span> Install a Neo4J server</h2>
+<h2><span class="header-section-number">9.1</span> Install a Neo4J server</h2>
 <div id="on-a-linux-machine" class="section level3">
-<h3><span class="header-section-number">8.1.1</span> On a Linux Machine</h3>
+<h3><span class="header-section-number">9.1.1</span> On a Linux Machine</h3>
 </div>
 <div id="on-a-mac-machine" class="section level3">
-<h3><span class="header-section-number">8.1.2</span> On a Mac Machine</h3>
+<h3><span class="header-section-number">9.1.2</span> On a Mac Machine</h3>
 
 </div>
 </div>
@@ -205,7 +215,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="visualise.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="movie.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>
@@ -226,7 +236,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -236,6 +246,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
 "link": null,
 "text": null
 },
