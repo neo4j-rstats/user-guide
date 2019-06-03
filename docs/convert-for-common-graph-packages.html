@@ -210,22 +210,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre class="sourceCode r"><code class="sourceCode r">G &lt;-<span class="st">&quot;MATCH a=(p:Person {name: &#39;Tom Hanks&#39;})-[r:ACTED_IN]-&gt;(m:Movie) RETURN a;&quot;</span> <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">call_neo4j</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>) 
 
-<span class="kw">library</span>(dplyr)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(purrr)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;purrr&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:magrittr&#39;:
-## 
-##     set_names</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a dataframe with col 1 being the ID, </span>
+<span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(purrr)
+<span class="co"># Create a dataframe with col 1 being the ID, </span>
 <span class="co"># And columns 2 being the names</span>
 G<span class="op">$</span>nodes &lt;-<span class="st"> </span>G<span class="op">$</span>nodes <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">unnest_nodes</span>(<span class="dt">what =</span> <span class="st">&quot;properties&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -234,14 +221,14 @@ G<span class="op">$</span>nodes &lt;-<span class="st"> </span>G<span class="op">
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">label =</span> <span class="kw">map_chr</span>(label, <span class="dv">1</span>))
 <span class="kw">head</span>(G<span class="op">$</span>nodes)</code></pre>
 <pre><code>## # A tibble: 6 x 7
-##   id    label  tagline                    title     released  born name  
-##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;                      &lt;chr&gt;        &lt;int&gt; &lt;int&gt; &lt;chr&gt; 
-## 1 144   Movie  Houston, we have a proble… Apollo 13     1995    NA &lt;NA&gt;  
-## 2 71    Person &lt;NA&gt;                       &lt;NA&gt;            NA  1956 Tom H…
-## 3 67    Movie  At odds in life... in lov… Youve Go…     1998    NA &lt;NA&gt;  
-## 4 162   Movie  Once in a lifetime you ge… A League…     1992    NA &lt;NA&gt;  
-## 5 78    Movie  A story of love, lava and… Joe Vers…     1990    NA &lt;NA&gt;  
-## 6 85    Movie  In every life there comes… That Thi…     1996    NA &lt;NA&gt;</code></pre>
+##   id    label  tagline                     title      released  born name  
+##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;                       &lt;chr&gt;         &lt;int&gt; &lt;int&gt; &lt;chr&gt; 
+## 1 144   Movie  Houston, we have a problem. Apollo 13      1995    NA &lt;NA&gt;  
+## 2 71    Person &lt;NA&gt;                        &lt;NA&gt;             NA  1956 Tom H…
+## 3 67    Movie  At odds in life... in love… Youve Got…     1998    NA &lt;NA&gt;  
+## 4 162   Movie  Once in a lifetime you get… A League …     1992    NA &lt;NA&gt;  
+## 5 78    Movie  A story of love, lava and … Joe Versu…     1990    NA &lt;NA&gt;  
+## 6 85    Movie  In every life there comes … That Thin…     1996    NA &lt;NA&gt;</code></pre>
 <p>We then reorder the relationnship table:</p>
 <pre class="sourceCode r"><code class="sourceCode r">G<span class="op">$</span>relationships &lt;-<span class="st"> </span>G<span class="op">$</span>relationships <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">unnest_relationships</span>() <span class="op">%&gt;%</span>
@@ -262,17 +249,16 @@ G<span class="op">$</span>nodes &lt;-<span class="st"> </span>G<span class="op">
   <span class="dt">vertices =</span> G<span class="op">$</span>nodes
 )
 <span class="kw">plot</span>(graph_object)</code></pre>
-<p><img src="neo4j-r-book_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p><img src="neo4j-r-book_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <p>This can also be used with <code>{ggraph}</code> :</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggraph)</code></pre>
-<pre><code>## Loading required package: ggplot2</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">graph_object <span class="op">%&gt;%</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggraph)
+graph_object <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggraph</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_node_label</span>(<span class="kw">aes</span>(<span class="dt">label =</span> label)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_edge_link</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme_graph</span>()</code></pre>
 <pre><code>## Using `nicely` as default layout</code></pre>
-<p><img src="neo4j-r-book_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p><img src="neo4j-r-book_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 </div>
 <div id="visnetwork" class="section level2">
 <h2><span class="header-section-number">6.2</span> {visNetwork}</h2>

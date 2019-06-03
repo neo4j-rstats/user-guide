@@ -206,12 +206,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read_cypher</span>(<span class="st">&quot;data-raw/create.cypher&quot;</span>)</code></pre>
 <pre><code>## # A tibble: 5 x 1
-##   cypher                                                                 
-##   &lt;chr&gt;                                                                  
-## 1 CREATE CONSTRAINT ON (b:Band) ASSERT b.name IS UNIQUE;                 
-## 2 CREATE CONSTRAINT ON (c:City) ASSERT c.name IS UNIQUE;                 
-## 3 CREATE CONSTRAINT ON (r:record) ASSERT r.name IS UNIQUE;               
-## 4 CREATE (ancient:Band {name: &#39;Ancient&#39;, formed: 1992}), (acturus:Band {…
+##   cypher                                                                   
+##   &lt;chr&gt;                                                                    
+## 1 CREATE CONSTRAINT ON (b:Band) ASSERT b.name IS UNIQUE;                   
+## 2 CREATE CONSTRAINT ON (c:City) ASSERT c.name IS UNIQUE;                   
+## 3 CREATE CONSTRAINT ON (r:record) ASSERT r.name IS UNIQUE;                 
+## 4 CREATE (ancient:Band {name: &#39;Ancient&#39;, formed: 1992}), (acturus:Band {na…
 ## 5 &quot;&quot;</code></pre>
 <ul>
 <li><code>send_cypher</code> reads a cypher file, and send it the the API. By default, the stats are returned.</li>

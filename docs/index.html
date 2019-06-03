@@ -211,13 +211,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>It’s modern in the sense that the results are returned as tibbles whenever possible, it relies on modern tools, and it is designed to work with pipes. Our goal is to provide a driver that can be easily integrated in a data analysis workflow, especially by providing an API working smoothly with other data analysis (<code>{dplyr}</code> or <code>{purrr}</code>) and graph packages (<code>{igraph}</code>, <code>{ggraph}</code>, <code>{visNetwork}</code>…).</p>
 <p>It’s flexible in the sense that it is rather unopinionated regarding the way it returns the results, by trying to stay as close as possible to the way Neo4J returns data. That way, you have the control over the way you will compute the results. At the same time, the result is not too complex, so that the “heavy lifting” of data wrangling is not left to the user.</p>
 <p>The connexion object is also an easy to control R6 method, allowing you to update and query information from the API.</p>
-<p>Sending data for this book (the movies dataset is also loaded on the server):</p>
+<p>Sending data for this book:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(neo4r)
 con &lt;-<span class="st"> </span>neo4j_api<span class="op">$</span><span class="kw">new</span>(
   <span class="dt">url =</span> <span class="st">&quot;http://localhost:7474&quot;</span>,
   <span class="dt">user =</span> <span class="st">&quot;neo4j&quot;</span>, 
   <span class="dt">password =</span> <span class="st">&quot;password&quot;</span>
   )
+<span class="co"># Note that play_movies is only available for versions &gt;= 0.1.3 </span>
 <span class="kw">play_movies</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">call_neo4j</span>(con)</code></pre>
 <pre><code>## $a
@@ -237,18 +238,18 @@ con &lt;-<span class="st"> </span>neo4j_api<span class="op">$</span><span class=
 ## 
 ## $m
 ## # A tibble: 10 x 3
-##    tagline                                       title           released
-##    &lt;chr&gt;                                         &lt;chr&gt;              &lt;int&gt;
-##  1 In every life there comes a time when that t… That Thing You…     1996
-##  2 Once in a lifetime you get a chance to do so… A League of Th…     1992
-##  3 What if someone you never met, someone you n… Sleepless in S…     1993
-##  4 A stiff drink. A little mascara. A lot of ne… Charlie Wilson…     2007
-##  5 At the edge of the world, his journey begins. Cast Away           2000
-##  6 Walk a mile youll never forget.               The Green Mile      1999
-##  7 Break The Codes                               The Da Vinci C…     2006
-##  8 This Holiday Season… Believe                  The Polar Expr…     2004
-##  9 A story of love, lava and burning desire.     Joe Versus the…     1990
-## 10 Everything is connected                       Cloud Atlas         2012
+##    tagline                                         title           released
+##    &lt;chr&gt;                                           &lt;chr&gt;              &lt;int&gt;
+##  1 In every life there comes a time when that thi… That Thing You…     1996
+##  2 Once in a lifetime you get a chance to do some… A League of Th…     1992
+##  3 What if someone you never met, someone you nev… Sleepless in S…     1993
+##  4 A stiff drink. A little mascara. A lot of nerv… Charlie Wilson…     2007
+##  5 At the edge of the world, his journey begins.   Cast Away           2000
+##  6 Walk a mile youll never forget.                 The Green Mile      1999
+##  7 Break The Codes                                 The Da Vinci C…     2006
+##  8 This Holiday Season… Believe                    The Polar Expr…     2004
+##  9 A story of love, lava and burning desire.       Joe Versus the…     1990
+## 10 Everything is connected                         Cloud Atlas         2012
 ## 
 ## $d
 ## # A tibble: 10 x 2

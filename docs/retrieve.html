@@ -320,19 +320,19 @@ jsonlite<span class="op">::</span><span class="kw">read_json</span>(tmp)</code><
 <span class="st">  </span><span class="kw">call_neo4j</span>(con, <span class="dt">type =</span> <span class="st">&quot;graph&quot;</span>)
 <span class="kw">unnest_nodes</span>(res<span class="op">$</span>nodes)</code></pre>
 <pre><code>## # A tibble: 11 x 5
-##    id    value tagline                              title        released
-##    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;                                &lt;chr&gt;           &lt;int&gt;
-##  1 144   Movie Houston, we have a problem.          Apollo 13        1995
-##  2 67    Movie At odds in life... in love on-line.  Youve Got M…     1998
-##  3 162   Movie Once in a lifetime you get a chance… A League of…     1992
-##  4 78    Movie A story of love, lava and burning d… Joe Versus …     1990
-##  5 85    Movie In every life there comes a time wh… That Thing …     1996
-##  6 111   Movie Break The Codes                      The Da Vinc…     2006
-##  7 105   Movie Everything is connected              Cloud Atlas      2012
-##  8 150   Movie At the edge of the world, his journ… Cast Away        2000
-##  9 130   Movie Walk a mile youll never forget.      The Green M…     1999
-## 10 73    Movie What if someone you never met, some… Sleepless i…     1993
-## 11 159   Movie A stiff drink. A little mascara. A … Charlie Wil…     2007</code></pre>
+##    id    value tagline                                title        released
+##    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;                                  &lt;chr&gt;           &lt;int&gt;
+##  1 144   Movie Houston, we have a problem.            Apollo 13        1995
+##  2 67    Movie At odds in life... in love on-line.    Youve Got M…     1998
+##  3 162   Movie Once in a lifetime you get a chance t… A League of…     1992
+##  4 78    Movie A story of love, lava and burning des… Joe Versus …     1990
+##  5 85    Movie In every life there comes a time when… That Thing …     1996
+##  6 111   Movie Break The Codes                        The Da Vinc…     2006
+##  7 105   Movie Everything is connected                Cloud Atlas      2012
+##  8 150   Movie At the edge of the world, his journey… Cast Away        2000
+##  9 130   Movie Walk a mile youll never forget.        The Green M…     1999
+## 10 73    Movie What if someone you never met, someon… Sleepless i…     1993
+## 11 159   Movie A stiff drink. A little mascara. A lo… Charlie Wil…     2007</code></pre>
 <p>Note that this function will return <code>NA</code> for the properties that aren’t in a node. For example here, we have no ‘formed’ information for the record nodes .</p>
 <p>On the long run, and this is not {neo4r} specific but Neo4J related, a good practice is to have a “name” propertie on each node, so this column will be full here.</p>
 <p>Also, it is possible to unnest either the properties or the labels :</p>
@@ -340,19 +340,19 @@ jsonlite<span class="op">::</span><span class="kw">read_json</span>(tmp)</code><
 <span class="st">  </span><span class="kw">extract_nodes</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">unnest_nodes</span>(<span class="dt">what =</span> <span class="st">&quot;properties&quot;</span>)</code></pre>
 <pre><code>## # A tibble: 11 x 5
-##    id    label   tagline                            title        released
-##    &lt;chr&gt; &lt;list&gt;  &lt;chr&gt;                              &lt;chr&gt;           &lt;int&gt;
-##  1 144   &lt;chr [… Houston, we have a problem.        Apollo 13        1995
-##  2 67    &lt;chr [… At odds in life... in love on-lin… Youve Got M…     1998
-##  3 162   &lt;chr [… Once in a lifetime you get a chan… A League of…     1992
-##  4 78    &lt;chr [… A story of love, lava and burning… Joe Versus …     1990
-##  5 85    &lt;chr [… In every life there comes a time … That Thing …     1996
-##  6 111   &lt;chr [… Break The Codes                    The Da Vinc…     2006
-##  7 105   &lt;chr [… Everything is connected            Cloud Atlas      2012
-##  8 150   &lt;chr [… At the edge of the world, his jou… Cast Away        2000
-##  9 130   &lt;chr [… Walk a mile youll never forget.    The Green M…     1999
-## 10 73    &lt;chr [… What if someone you never met, so… Sleepless i…     1993
-## 11 159   &lt;chr [… A stiff drink. A little mascara. … Charlie Wil…     2007</code></pre>
+##    id    label   tagline                              title        released
+##    &lt;chr&gt; &lt;list&gt;  &lt;chr&gt;                                &lt;chr&gt;           &lt;int&gt;
+##  1 144   &lt;chr [… Houston, we have a problem.          Apollo 13        1995
+##  2 67    &lt;chr [… At odds in life... in love on-line.  Youve Got M…     1998
+##  3 162   &lt;chr [… Once in a lifetime you get a chance… A League of…     1992
+##  4 78    &lt;chr [… A story of love, lava and burning d… Joe Versus …     1990
+##  5 85    &lt;chr [… In every life there comes a time wh… That Thing …     1996
+##  6 111   &lt;chr [… Break The Codes                      The Da Vinc…     2006
+##  7 105   &lt;chr [… Everything is connected              Cloud Atlas      2012
+##  8 150   &lt;chr [… At the edge of the world, his journ… Cast Away        2000
+##  9 130   &lt;chr [… Walk a mile youll never forget.      The Green M…     1999
+## 10 73    &lt;chr [… What if someone you never met, some… Sleepless i…     1993
+## 11 159   &lt;chr [… A stiff drink. A little mascara. A … Charlie Wil…     2007</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">res <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">extract_nodes</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">unnest_nodes</span>(<span class="dt">what =</span> <span class="st">&quot;label&quot;</span>)</code></pre>
@@ -401,19 +401,19 @@ jsonlite<span class="op">::</span><span class="kw">read_json</span>(tmp)</code><
 <span class="st">  </span><span class="kw">unnest_graph</span>()</code></pre>
 <pre><code>## $nodes
 ## # A tibble: 11 x 7
-##    id    value   born name          tagline            title     released
-##    &lt;chr&gt; &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;              &lt;chr&gt;        &lt;int&gt;
-##  1 71    Person  1956 Tom Hanks     &lt;NA&gt;               &lt;NA&gt;            NA
-##  2 105   Movie     NA &lt;NA&gt;          Everything is con… Cloud At…     2012
-##  3 107   Person  1949 Jim Broadbent &lt;NA&gt;               &lt;NA&gt;            NA
-##  4 109   Person  1969 David Mitche… &lt;NA&gt;               &lt;NA&gt;            NA
-##  5 108   Person  1965 Tom Tykwer    &lt;NA&gt;               &lt;NA&gt;            NA
-##  6 6     Person  1965 Lana Wachows… &lt;NA&gt;               &lt;NA&gt;            NA
-##  7 110   Person  1961 Stefan Arndt  &lt;NA&gt;               &lt;NA&gt;            NA
-##  8 169   Person    NA Jessica Thom… &lt;NA&gt;               &lt;NA&gt;            NA
-##  9 106   Person  1966 Halle Berry   &lt;NA&gt;               &lt;NA&gt;            NA
-## 10 4     Person  1960 Hugo Weaving  &lt;NA&gt;               &lt;NA&gt;            NA
-## 11 5     Person  1967 Lilly Wachow… &lt;NA&gt;               &lt;NA&gt;            NA
+##    id    value   born name           tagline             title     released
+##    &lt;chr&gt; &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;               &lt;chr&gt;        &lt;int&gt;
+##  1 71    Person  1956 Tom Hanks      &lt;NA&gt;                &lt;NA&gt;            NA
+##  2 105   Movie     NA &lt;NA&gt;           Everything is conn… Cloud At…     2012
+##  3 107   Person  1949 Jim Broadbent  &lt;NA&gt;                &lt;NA&gt;            NA
+##  4 109   Person  1969 David Mitchell &lt;NA&gt;                &lt;NA&gt;            NA
+##  5 108   Person  1965 Tom Tykwer     &lt;NA&gt;                &lt;NA&gt;            NA
+##  6 6     Person  1965 Lana Wachowski &lt;NA&gt;                &lt;NA&gt;            NA
+##  7 110   Person  1961 Stefan Arndt   &lt;NA&gt;                &lt;NA&gt;            NA
+##  8 169   Person    NA Jessica Thomp… &lt;NA&gt;                &lt;NA&gt;            NA
+##  9 106   Person  1966 Halle Berry    &lt;NA&gt;                &lt;NA&gt;            NA
+## 10 4     Person  1960 Hugo Weaving   &lt;NA&gt;                &lt;NA&gt;            NA
+## 11 5     Person  1967 Lilly Wachows… &lt;NA&gt;                &lt;NA&gt;            NA
 ## 
 ## $relationships
 ## # A tibble: 23 x 8

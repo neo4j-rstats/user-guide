@@ -36,7 +36,7 @@ It's flexible in the sense that it is rather unopinionated regarding the way it 
 
 The connexion object is also an easy to control R6 method, allowing you to update and query information from the API. 
 
-Sending data for this book (the movies dataset is also loaded on the server):
+Sending data for this book:
 
 ```{r}
 library(neo4r)
@@ -45,6 +45,7 @@ con <- neo4j_api$new(
   user = "neo4j", 
   password = "password"
   )
+# Note that play_movies is only available for versions >= 0.1.3 
 play_movies() %>%
   call_neo4j(con)
 ```
